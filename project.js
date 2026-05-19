@@ -1,196 +1,775 @@
-let currentUser = localStorage.getItem("currentUser");
-
-let index = localStorage.getItem("openProject");
 let projects = JSON.parse(localStorage.getItem("projects")) || [];
+let currentUser = localStorage.getItem("currentUser") || "Marta";
 
-let p = projects[index];
+localStorage.setItem("currentUser", currentUser);
 
-if (!p) {
-    document.body.innerHTML = "<h1>Проєкт не знайдено</h1>";
-    throw new Error("Project not found");
+let currentTab = "all";
+let currentSort = "new";
+let searchValue = "";
+let authMode = "login";
+
+/* ================= DEFAULT PROJECTS ================= */
+
+function addDefaultProjects() {
+
+    if (projects.length > 0) return;
+
+    projects = [
+        {
+            id: 1,
+            name: "Calculator",
+            desc: "Simple calculator built with JavaScript",
+            category: "JavaScript",
+            author: "Marta",
+            date: new Date().toLocaleDateString(),
+            likes: 12,
+            likedUsers: [],
+            fav: false,
+
+            html: `
+<h1>Calculator</h1>
+
+<input id="num1" type="number" placeholder="Number 1">
+<input id="num2" type="number" placeholder="Number 2">
+
+<button onclick="calculate('+')">+</button>
+<button onclick="calculate('-')">-</button>
+<button onclick="calculate('*')">×</button>
+<button onclick="calculate('/')">÷</button>
+
+<h2 id="result">Result: —</h2>
+`,
+
+            css: `
+body {
+    font-family: Arial;
+    text-align: center;
+    padding: 40px;
+    background: #0d1117;
+    color: white;
 }
 
-/* ---------------- SAFE GET ---------------- */
-function el(id) {
-    return document.getElementById(id);
+input {
+    padding: 10px;
+    margin: 6px;
+    border-radius: 8px;
+    border: 1px solid #30363d;
 }
 
-/* ---------------- LOAD DATA ---------------- */
-if (el("title")) el("title").innerText = p.name;
-if (el("desc")) el("desc").innerText = p.desc;
-if (el("author")) el("author").innerText = p.author;
-if (el("date")) el("date").innerText = p.date;
-if (el("category")) el("category").innerText = p.category || "—";
+button {
+    padding: 10px 15px;
+    margin: 5px;
+    background: #238636;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+`,
 
-/* CODE FIELDS */
-if (el("html")) el("html").value = p.html || "";
-if (el("css")) el("css").value = p.css || "";
-if (el("js")) el("js").value = p.js || "";
-if (el("readme")) {
-    el("readme").value = p.readme || "";
+            js: `
+function calculate(operator) {
+    let a = Number(document.getElementById("num1").value);
+    let b = Number(document.getElementById("num2").value);
+    let result;
+
+    if (operator === "+") result = a + b;
+    if (operator === "-") result = a - b;
+    if (operator === "*") result = a * b;
+
+    if (operator === "/") {
+        result = b === 0 ? "Error" : a / b;
+    }
+
+    document.getElementById("result").innerText = "Result: " + result;
+}
+`
+        },
+
+        {
+            id: 2,
+            name: "To-Do List",
+            desc: "Task manager for daily tasks",
+            category: "JavaScript",
+            author: "Marta",
+            date: new Date().toLocaleDateString(),
+            likes: 8,
+            likedUsers: [],
+            fav: false,
+
+            html: `
+<h1>To-Do List</h1>
+
+<input id="taskInput" placeholder="Enter task...">
+<button onclick="addTask()">Add</button>
+
+<ul id="taskList"></ul>
+`,
+
+            css: `
+body {
+    font-family: Arial;
+    background: #0d1117;
+    color: white;
+    text-align: center;
+    padding: 40px;
 }
 
-
-/* ---------------- SAVE ---------------- */
-function autoSave() {
-    let projects = JSON.parse(localStorage.getItem("projects")) || [];
-
-    if (!projects[index]) return;
-
-    projects[index].html = el("html")?.value || "";
-    projects[index].css = el("css")?.value || "";
-    projects[index].js = el("js")?.value || "";
-    projects[index].readme =
-    el("readme")?.value || "";
-
-
-    localStorage.setItem("projects", JSON.stringify(projects));
+input {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #30363d;
 }
 
-/* ---------------- EDITOR EVENTS ---------------- */
-function bindEditors() {
-    ["html", "css", "js"].forEach(id => {
-        if (el(id)) {
-            el(id).addEventListener("input", () => {
-                autoSave();
-                updatePreview();
-            });
+button {
+    padding: 10px 14px;
+    background: #238636;
+    color: white;
+    border: none;
+    border-radius: 8px;
+}
+
+li {
+    list-style: none;
+    background: #161b22;
+    margin: 8px auto;
+    padding: 10px;
+    width: 260px;
+    border-radius: 8px;
+}
+`,
+
+            js: `
+function addTask() {
+    let input = document.getElementById("taskInput");
+    let text = input.value.trim();
+
+    if (text === "") return;
+
+    let li = document.createElement("li");
+    li.innerText = text;
+
+    li.onclick = function () {
+        li.remove();
+    };
+
+    document.getElementById("taskList").appendChild(li);
+    input.value = "";
+}
+`
+        },
+
+        {
+            id: 3,
+            name: "Notes App",
+            desc: "Mini app for creating notes",
+            category: "JavaScript",
+            author: "Marta",
+            date: new Date().toLocaleDateString(),
+            likes: 5,
+            likedUsers: [],
+            fav: false,
+
+            html: `
+<h1>Notes App</h1>
+
+<textarea id="noteText" placeholder="Write your note..."></textarea>
+
+<br>
+
+<button onclick="addNote()">Add Note</button>
+
+<div id="notes"></div>
+`,
+
+            css: `
+body {
+    font-family: Arial;
+    background: #0d1117;
+    color: white;
+    padding: 40px;
+}
+
+textarea {
+    width: 300px;
+    height: 90px;
+    background: #161b22;
+    color: white;
+    border: 1px solid #30363d;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+button {
+    margin-top: 10px;
+    padding: 10px 14px;
+    background: #238636;
+    color: white;
+    border: none;
+    border-radius: 8px;
+}
+
+.note {
+    margin-top: 12px;
+    padding: 12px;
+    background: #161b22;
+    border-radius: 10px;
+}
+`,
+
+            js: `
+function addNote() {
+    let text = document.getElementById("noteText").value.trim();
+
+    if (text === "") return;
+
+    let div = document.createElement("div");
+    div.className = "note";
+    div.innerText = text;
+
+    document.getElementById("notes").appendChild(div);
+    document.getElementById("noteText").value = "";
+}
+`
+        },
+
+        {
+            id: 4,
+            name: "Weather Card",
+            desc: "Modern weather interface",
+            category: "HTML",
+            author: "Marta",
+            date: new Date().toLocaleDateString(),
+            likes: 6,
+            likedUsers: [],
+            fav: false,
+
+            html: `
+<div class="card">
+    <h1>Ivano-Frankivsk</h1>
+    <h2>18°C</h2>
+    <p>Cloudy • Wind 8 km/h</p>
+</div>
+`,
+
+            css: `
+body {
+    font-family: Arial;
+    background: #0d1117;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.card {
+    background: linear-gradient(135deg, #161b22, #1f6feb);
+    padding: 30px;
+    border-radius: 20px;
+    text-align: center;
+    width: 300px;
+}
+`,
+
+            js: `
+console.log("Weather card loaded");
+`
+        },
+
+        {
+            id: 5,
+            name: "Portfolio Website",
+            desc: "Personal portfolio website",
+            category: "HTML",
+            author: "Marta",
+            date: new Date().toLocaleDateString(),
+            likes: 7,
+            likedUsers: [],
+            fav: false,
+
+            html: `
+<h1>Marta</h1>
+<p>Frontend Developer</p>
+
+<button onclick="contact()">Contact me</button>
+`,
+
+            css: `
+body {
+    background: #0d1117;
+    color: white;
+    font-family: Arial;
+    text-align: center;
+    padding: 60px;
+}
+
+h1 {
+    color: #58a6ff;
+}
+
+button {
+    padding: 10px 16px;
+    background: #238636;
+    color: white;
+    border: none;
+    border-radius: 8px;
+}
+`,
+
+            js: `
+function contact() {
+    alert("Contact form will be added soon!");
+}
+`
+        },
+
+        {
+            id: 6,
+            name: "Quiz App",
+            desc: "Simple quiz application",
+            category: "JavaScript",
+            author: "Marta",
+            date: new Date().toLocaleDateString(),
+            likes: 9,
+            likedUsers: [],
+            fav: false,
+
+            html: `
+<h1>Quiz</h1>
+
+<p>2 + 2 = ?</p>
+
+<button onclick="check(4)">4</button>
+<button onclick="check(5)">5</button>
+
+<h2 id="result"></h2>
+`,
+
+            css: `
+body {
+    font-family: Arial;
+    text-align: center;
+    padding: 40px;
+    background: #0d1117;
+    color: white;
+}
+
+button {
+    padding: 10px 18px;
+    margin: 5px;
+    background: #238636;
+    color: white;
+    border: none;
+    border-radius: 8px;
+}
+`,
+
+            js: `
+function check(answer) {
+    if (answer === 4) {
+        document.getElementById("result").innerText = "Correct";
+    } else {
+        document.getElementById("result").innerText = "Wrong";
+    }
+}
+`
         }
-    });
-}
-
-bindEditors();
-
-/* ---------------- LIVE PREVIEW ---------------- */
-function updatePreview() {
-    let html = el("html")?.value || "";
-    let css = el("css")?.value || "";
-    let js = el("js")?.value || "";
-
-    let iframe = el("preview");
-    if (!iframe) return;
-
-    iframe.srcdoc = `
-        <html>
-        <head>
-            <style>${css}</style>
-        </head>
-        <body>
-            ${html}
-            <script>${js}<\/script>
-        </body>
-        </html>
-    `;
-}
-
-updatePreview();
-
-/* ---------------- BACK ---------------- */
-function goBack() {
-    window.location.href = "index.html";
-}
-
-/* ---------------- SAVE BUTTON ---------------- */
-function saveProject() {
-    let projects = JSON.parse(localStorage.getItem("projects")) || [];
-
-    if (!projects[index]) return;
-
-    projects[index].html = el("html")?.value || "";
-    projects[index].css = el("css")?.value || "";
-    projects[index].js = el("js")?.value || "";
-    projects[index].readme = el("readme")?.value || "";
+    ];
 
     localStorage.setItem("projects", JSON.stringify(projects));
-
-    alert("Збережено!");
 }
 
-/* ---------------- COMMENTS ---------------- */
-function addComment() {
-    let text = el("commentText")?.value;
-    if (!text) return;
+/* ================= INIT ================= */
 
-    if (!p.comments) p.comments = [];
+window.onload = function () {
 
-    p.comments.push({
-        user: currentUser || "Guest",
-        text: text,
-        date: new Date().toLocaleDateString()
+    addDefaultProjects();
+
+    loadHeaderProfile();
+
+    renderProjects();
+
+    updateCount();
+
+    let search = document.getElementById("search");
+
+    if (search) {
+        search.addEventListener("input", function (e) {
+            searchValue = e.target.value.toLowerCase();
+            renderProjects();
+        });
+    }
+};
+
+/* ================= ADD PROJECT ================= */
+
+function addProject() {
+
+    let name = document.getElementById("name").value;
+    let desc = document.getElementById("desc").value;
+    let category = document.getElementById("category")?.value || "";
+    let code = document.getElementById("code")?.value || "";
+
+    if (!name || !desc) return;
+
+    projects.push({
+        id: Date.now(),
+        name: name,
+        desc: desc,
+        category: category,
+        author: currentUser,
+        date: new Date().toLocaleDateString(),
+        likes: 0,
+        likedUsers: [],
+        fav: false,
+        html: code,
+        css: "",
+        js: "",
+        readme: ""
     });
 
-    localStorage.setItem("projects", JSON.stringify(projects));
+    save();
 
-    if (el("commentText")) el("commentText").value = "";
+    document.getElementById("name").value = "";
+    document.getElementById("desc").value = "";
 
-    renderComments();
+    if (document.getElementById("category")) {
+        document.getElementById("category").value = "";
+    }
+
+    if (document.getElementById("code")) {
+        document.getElementById("code").value = "";
+    }
+
+    renderProjects();
 }
 
-function renderComments() {
-    let list = el("commentsList");
-    if (!list) return;
+/* ================= RENDER PROJECTS ================= */
 
-    list.innerHTML = "";
+function renderProjects() {
 
-    let comments = p.comments || [];
+    let container = document.getElementById("projects");
 
-    [...comments].reverse().forEach(c => {
-        let div = document.createElement("div");
-        div.className = "project";
+    if (!container) return;
 
-        div.innerHTML = `
-            <h4>${c.user}</h4>
-            <p>${c.text}</p>
-            <small>${c.date}</small>
+    container.innerHTML = "";
+
+    let list = [...projects];
+
+    if (["HTML", "CSS", "JS", "JAVASCRIPT"].includes(currentTab)) {
+        list = list.filter(p =>
+            (p.category || "").toUpperCase() === currentTab
+        );
+    }
+
+    if (currentTab === "fav") {
+        list = list.filter(p => p.fav);
+    }
+
+    if (currentSort === "new") {
+        list = list.slice().reverse();
+    }
+
+    if (searchValue) {
+        list = list.filter(p =>
+            p.name.toLowerCase().includes(searchValue) ||
+            p.desc.toLowerCase().includes(searchValue) ||
+            p.author.toLowerCase().includes(searchValue)
+        );
+    }
+
+    if (list.length === 0) {
+        container.innerHTML = `
+            <div class="empty-box">
+                Репозиторії не знайдені
+            </div>
         `;
+        return;
+    }
 
-        list.appendChild(div);
+    list.forEach(function (p) {
+
+        let index = projects.indexOf(p);
+
+        container.innerHTML += `
+            <div class="project">
+
+                <h3>${p.name}</h3>
+
+                <p>${p.desc}</p>
+
+                <div class="project-actions">
+
+                    <button onclick="openModal(${index})" class="open-btn">
+                        Відкрити
+                    </button>
+
+                    <button onclick="likeProject(${index})" class="like-btn ${p.likedUsers?.includes(currentUser) ? "liked" : ""}">
+                        ${p.likedUsers?.includes(currentUser) ? "Liked" : "Like"}
+                    </button>
+
+                    <button onclick="toggleFav(${index})" class="fav-btn ${p.fav ? "active" : ""}">
+                        ${p.fav ? "Saved" : "Save"}
+                    </button>
+
+                    <button onclick="deleteProject(${index})" class="main-delete-btn">
+                        Видалити
+                    </button>
+
+                </div>
+
+                <div class="project-meta">
+                    <span>👤 ${p.author}</span>
+                    <span>📅 ${p.date || "—"}</span>
+                    <span>🏷 ${p.category || "—"}</span>
+                    <span>❤️ ${p.likes || 0}</span>
+                </div>
+
+            </div>
+        `;
     });
+
+    updateCount();
 }
 
-renderComments();
+/* ================= PROJECT ACTIONS ================= */
 
-/* ---------------- FILE SWITCH (TERMINAL STYLE) ---------------- */
-let currentFile = "html";
+function openModal(index) {
+    localStorage.setItem("openProject", index);
+    window.location.href = "project.html";
+}
 
-function switchFile(file) {
-    currentFile = file;
+function deleteProject(index) {
 
-    document.querySelectorAll(".code").forEach(el => {
-        el.style.display = "none";
+    let agree = confirm("Видалити цей репозиторій?");
+
+    if (!agree) return;
+
+    projects.splice(index, 1);
+
+    save();
+
+    renderProjects();
+}
+
+function likeProject(index) {
+
+    let project = projects[index];
+
+    if (!project.likedUsers) {
+        project.likedUsers = [];
+    }
+
+    if (project.likedUsers.includes(currentUser)) {
+        project.likedUsers = project.likedUsers.filter(user => user !== currentUser);
+        project.likes = Math.max((project.likes || 1) - 1, 0);
+    } else {
+        project.likedUsers.push(currentUser);
+        project.likes = (project.likes || 0) + 1;
+    }
+
+    save();
+
+    renderProjects();
+}
+
+function toggleFav(index) {
+
+    projects[index].fav = !projects[index].fav;
+
+    save();
+
+    renderProjects();
+}
+
+/* ================= FILTERS ================= */
+
+function setTab(type, btn) {
+
+    currentTab = type;
+
+    document.querySelectorAll(".filter-btn").forEach(function (b) {
+        b.classList.remove("active");
     });
 
-    let active = document.getElementById(file);
-    if (active) active.style.display = "block";
+    if (btn) {
+        btn.classList.add("active");
+    }
 
-    document.querySelectorAll(".file-tab").forEach(btn => {
-        btn.classList.remove("active");
-    });
+    renderProjects();
+}
 
-    if (event?.target) {
-        event.target.classList.add("active");
+function setSort(type) {
+    currentSort = type;
+    renderProjects();
+}
+
+function clearSearch() {
+    let search = document.getElementById("search");
+
+    if (search) {
+        search.value = "";
+    }
+
+    searchValue = "";
+
+    renderProjects();
+}
+
+/* ================= SAVE ================= */
+
+function save() {
+    localStorage.setItem("projects", JSON.stringify(projects));
+}
+
+/* ================= COUNT ================= */
+
+function updateCount() {
+
+    let count = document.getElementById("count");
+
+    if (count) {
+        count.textContent = projects.length;
     }
 }
 
-/* INIT */
-switchFile("html");
+/* ================= AUTH ================= */
 
-function togglePreview() {
+function openAuth(type) {
+    authMode = type;
 
-    let preview =
-        document.getElementById("preview");
+    let modal = document.getElementById("authModal");
+
+    if (modal) {
+        modal.style.display = "flex";
+    }
+
+    let title = document.getElementById("authTitle");
+
+    if (title) {
+        title.innerText = type === "login" ? "Login" : "Register";
+    }
+}
+
+function closeAuth() {
+    let modal = document.getElementById("authModal");
+
+    if (modal) {
+        modal.style.display = "none";
+    }
+}
+
+function submitAuth() {
+
+    let username = document.getElementById("authUser")?.value;
+    let password = document.getElementById("authPass")?.value;
+
+    if (!username || !password) {
+        alert("Fill all fields");
+        return;
+    }
+
+    let users = JSON.parse(localStorage.getItem("users")) || [];
+
+    if (authMode === "register") {
+
+        let exists = users.find(u => u.username === username);
+
+        if (exists) {
+            alert("User already exists");
+            return;
+        }
+
+        users.push({
+            username: username,
+            password: password
+        });
+
+        localStorage.setItem("users", JSON.stringify(users));
+        localStorage.setItem("currentUser", username);
+
+        location.reload();
+    }
+
+    if (authMode === "login") {
+
+        let user = users.find(u =>
+            u.username === username &&
+            u.password === password
+        );
+
+        if (!user) {
+            alert("Wrong login");
+            return;
+        }
+
+        localStorage.setItem("currentUser", username);
+
+        location.reload();
+    }
+}
+
+function logout() {
+    localStorage.removeItem("currentUser");
+    window.location.href = "login.html";
+}
+
+/* ================= MENU ================= */
+
+function toggleMenu() {
+
+    let menu = document.getElementById("dropdownMenu");
+
+    if (!menu) return;
+
+    menu.style.display =
+        menu.style.display === "block" ? "none" : "block";
+}
+
+window.addEventListener("click", function (e) {
+
+    let menu = document.getElementById("dropdownMenu");
+    let avatar = document.getElementById("headerAvatar");
 
     if (
-        preview.style.display === "none" ||
-        preview.style.display === ""
+        menu &&
+        avatar &&
+        !menu.contains(e.target) &&
+        e.target !== avatar
     ) {
+        menu.style.display = "none";
+    }
+});
 
-        preview.style.display = "block";
+/* ================= PROFILE HEADER ================= */
 
-        runCode();
+function goProfile() {
+    window.location.href = "profile.html";
+}
 
-    } else {
+function loadHeaderProfile() {
 
-        preview.style.display = "none";
+    currentUser = localStorage.getItem("currentUser") || "Marta";
+
+    let avatar = document.getElementById("headerAvatar");
+    let username = document.getElementById("menuUsername");
+
+    let profileBtn = document.getElementById("profileBtn");
+    let loginBtn = document.getElementById("loginBtn");
+    let registerBtn = document.getElementById("registerBtn");
+    let logoutBtn = document.getElementById("logoutBtn");
+
+    if (username) {
+        username.innerText = currentUser;
+    }
+
+    if (profileBtn) profileBtn.style.display = "block";
+    if (logoutBtn) logoutBtn.style.display = "block";
+    if (loginBtn) loginBtn.style.display = "none";
+    if (registerBtn) registerBtn.style.display = "none";
+
+    if (avatar) {
+        avatar.src = "https://derkevicmarta-design.github.io/CodeNest/images/avatar.jpg";
     }
 }
