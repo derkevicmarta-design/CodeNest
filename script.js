@@ -29,11 +29,18 @@ window.onload = function () {
     author:"Marta",
     likes:12,
 
-    code: `
-<!DOCTYPE html>
-<html>
-<head>
-<style>
+    htmlCode: `
+<h1>Calculator</h1>
+
+<input id="num1" placeholder="Number 1">
+<input id="num2" placeholder="Number 2">
+
+<button onclick="calculate()">+</button>
+
+<h2 id="result"></h2>
+`,
+
+    cssCode: `
 body{
 font-family:Arial;
 text-align:center;
@@ -46,40 +53,21 @@ margin:5px;
 button{
 padding:10px;
 }
-</style>
-</head>
-<body>
+`,
 
-<h1>Calculator</h1>
-
-<input id="num1" placeholder="Number 1">
-<input id="num2" placeholder="Number 2">
-
-<button onclick="calculate()">+</button>
-
-<h2 id="result"></h2>
-
-<script>
+    jsCode: `
 function calculate(){
 
 let a=
-Number(
-document.getElementById("num1").value
-);
+Number(document.getElementById("num1").value);
 
 let b=
-Number(
-document.getElementById("num2").value
-);
+Number(document.getElementById("num2").value);
 
 document.getElementById("result")
 .innerText=a+b;
 
 }
-<\/script>
-
-</body>
-</html>
 `
 },
 
@@ -91,21 +79,21 @@ document.getElementById("result")
     author:"Marta",
     likes:8,
 
-    code: `
-<!DOCTYPE html>
-<html>
-<body>
-
+    htmlCode: `
 <input id="task">
-
-<button onclick="addTask()">
-Add
-</button>
+<button onclick="addTask()">Add</button>
 
 <ul id="list"></ul>
+`,
 
-<script>
+    cssCode: `
+body{
+font-family:Arial;
+padding:30px;
+}
+`,
 
+    jsCode: `
 function addTask(){
 
 let task=
@@ -121,11 +109,6 @@ document
 .appendChild(li);
 
 }
-
-<\/script>
-
-</body>
-</html>
 `
 },
 
