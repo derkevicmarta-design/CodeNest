@@ -157,59 +157,48 @@ document
 `
 },
 
-        {
-    id:4,
-    name:"Weather Card",
-    desc:"Modern weather interface",
+       {
+    id:5,
+    name:"Portfolio Website",
+    desc:"Personal portfolio website",
     category:"HTML/CSS",
     author:"Marta",
-    likes:6,
+    likes:7,
 
-    code: `
-<!DOCTYPE html>
-<html>
-<head>
+    htmlCode: `
+<h1>Marta</h1>
 
-<style>
+<p>Frontend Developer</p>
 
+<button>
+Contact me
+</button>
+`,
+
+    cssCode: `
 body{
-
-font-family:Arial;
 background:#0d1117;
 color:white;
+font-family:Arial;
 text-align:center;
 padding:50px;
-
 }
 
-.card{
-
-background:#161b22;
-padding:20px;
-border-radius:15px;
-
+button{
+padding:10px;
+border:none;
+background:#58a6ff;
+color:white;
+border-radius:8px;
 }
+`,
 
-</style>
-
-</head>
-
-<body>
-
-<div class="card">
-
-<h1>Ivano-Frankivsk</h1>
-
-<h2>18°C</h2>
-
-<p>Cloudy</p>
-
-</div>
-
-</body>
-</html>
+    jsCode: `
+console.log(
+"Portfolio loaded"
+);
 `
-}
+},
 
     ];
 
