@@ -593,3 +593,9 @@ function updateHomeStats() {
         activeUser.textContent = currentUser || "Guest";
     }
 }
+
+let avatar = document.getElementById("headerAvatar");
+
+if (avatar) {
+    avatar.src = "https://derkevicmarta-design.github.io/CodeNest/images/avatar.jpg";
+}
