@@ -463,7 +463,7 @@ function loadHeaderProfile() {
 
         if (registerBtn) registerBtn.style.display = "block";
 
-        avatar.src = "https://via.placeholder.com/40";
+       avatar.src = "https://derkevicmarta-design.github.io/CodeNest/images/avatar.jpg";
 
         return;
     }
