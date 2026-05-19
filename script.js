@@ -17,6 +17,54 @@ window.onload = function () {
 
     loadHeaderProfile();
 
+    if (projects.length === 0) {
+
+    projects = [
+
+        {
+            id:1,
+            name:"Calculator",
+            desc:"Simple calculator built with JavaScript",
+            category:"JavaScript",
+            author:"Marta",
+            likes:12
+        },
+
+        {
+            id:2,
+            name:"To-Do List",
+            desc:"Task manager for daily tasks",
+            category:"JavaScript",
+            author:"Marta",
+            likes:8
+        },
+
+        {
+            id:3,
+            name:"Notes App",
+            desc:"Mini app for creating notes",
+            category:"JavaScript",
+            author:"Marta",
+            likes:5
+        },
+
+        {
+            id:4,
+            name:"Weather Card",
+            desc:"Modern weather interface",
+            category:"HTML/CSS",
+            author:"Marta",
+            likes:6
+        }
+
+    ];
+
+    localStorage.setItem(
+        "projects",
+        JSON.stringify(projects)
+    );
+}
+
     renderProjects();
 
     updateCount();
