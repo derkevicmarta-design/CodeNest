@@ -486,7 +486,7 @@ function loadHeaderProfile() {
 
     } else {
 
-        avatar.src = "https://via.placeholder.com/40";
+        avatar.src = "https://derkevicmarta-design.github.io/CodeNest/images/avatar.jpg";
     }
 }
 
