@@ -426,66 +426,26 @@ function goProfile() {
 
 function loadHeaderProfile() {
 
-    currentUser = localStorage.getItem("currentUser");
+    currentUser = localStorage.getItem("currentUser") || "Marta";
 
-    let profiles =
-        JSON.parse(localStorage.getItem("profiles")) || {};
+    let avatar = document.getElementById("headerAvatar");
+    let username = document.getElementById("menuUsername");
 
-    let avatar =
-        document.getElementById("headerAvatar");
+    let profileBtn = document.getElementById("profileBtn");
+    let loginBtn = document.getElementById("loginBtn");
+    let registerBtn = document.getElementById("registerBtn");
+    let logoutBtn = document.getElementById("logoutBtn");
 
-    let username =
-        document.getElementById("menuUsername");
-
-    let profileBtn =
-        document.getElementById("profileBtn");
-
-    let loginBtn =
-        document.getElementById("loginBtn");
-
-    let registerBtn =
-        document.getElementById("registerBtn");
-
-    let logoutBtn =
-        document.getElementById("logoutBtn");
-
-    if (!avatar || !username) return;
-
-    if (!currentUser) {
-
-        username.innerText = "Guest";
-
-        if (profileBtn) profileBtn.style.display = "none";
-
-        if (logoutBtn) logoutBtn.style.display = "none";
-
-        if (loginBtn) loginBtn.style.display = "block";
-
-        if (registerBtn) registerBtn.style.display = "block";
-
-       avatar.src = "https://derkevicmarta-design.github.io/CodeNest/images/avatar.jpg";
-
-        return;
+    if (username) {
+        username.innerText = currentUser;
     }
 
-    username.innerText = currentUser;
-
     if (profileBtn) profileBtn.style.display = "block";
-
     if (logoutBtn) logoutBtn.style.display = "block";
-
     if (loginBtn) loginBtn.style.display = "none";
-
     if (registerBtn) registerBtn.style.display = "none";
 
-    let profile = profiles[currentUser];
-
-    if (profile && profile.avatar) {
-
-        avatar.src = profile.avatar;
-
-    } else {
-
+    if (avatar) {
         avatar.src = "https://derkevicmarta-design.github.io/CodeNest/images/avatar.jpg";
     }
 }
