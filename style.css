@@ -3098,3 +3098,19 @@ iframe {
 .profile-main::after {
     pointer-events: none !important;
 }
+
+.register-text {
+    margin: 14px 0 10px 0;
+    color: #8b949e;
+    text-align: center;
+    font-size: 14px;
+}
+
+.register-btn {
+    width: 100%;
+    background: #238636 !important;
+}
+
+.register-btn:hover {
+    background: #2ea043 !important;
+}
