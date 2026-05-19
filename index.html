@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <meta charset="UTF-8">
+    <title>CodeNest</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<script>
+
+if(!localStorage.getItem("currentUser")){
+    window.location.href = "login.html";
+}
+
+</script>
+
+</script>
+    <!-- HEADER -->
+    <header class="header">
+
+        <!-- LEFT -->
+        <div class="left">
+            <h2>CodeNest</h2>
+        </div>
+
+        <!-- CENTER -->
+        <div class="search-box">
+
+    <input
+        id="search"
+        type="text"
+        placeholder="Search repositories..."
+    >
+
+    <button
+        class="clear-search-btn"
+        onclick="clearSearch()"
+    >
+        Clear
+    </button>
+
+</div>
+
+        <!-- RIGHT -->
+        <div class="right">
+
+            <a href="index.html">
+                <button>All projects</button>
+            </a>
+
+            <a href="profile.html">
+                <button>Profile</button>
+            </a>
+
+            <a href="myprojects.html">
+                <button>My repos</button>
+            </a>
+
+            <!-- PROFILE MENU -->
+            <div class="profile-menu">
+
+                <img
+                    id="headerAvatar"
+                    class="header-avatar"
+                    src="https://via.placeholder.com/40"
+                    onclick="toggleMenu()"
+                >
+
+                <div id="dropdownMenu" class="dropdown-menu">
+
+                    <div class="dropdown-user">
+                        <h3 id="menuUsername">Guest</h3>
+                    </div>
+
+                    <button
+                        id="profileBtn"
+                        onclick="goProfile()"
+                    >
+                        Profile
+                    </button>
+
+                    <button
+                        id="loginBtn"
+                        onclick="openAuth('login')"
+                    >
+                        Login
+                    </button>
+
+                    <button
+                        id="registerBtn"
+                        onclick="openAuth('register')"
+                    >
+                        Register
+                    </button>
+
+                    <button
+                        id="logoutBtn"
+                        onclick="logout()"
+                    >
+                        Logout
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </header>
+
+    <!-- CONTENT -->
+    <section class="container">
+
+        <!-- FILTERS -->
+        <div class="tabs">
+
+            <div class="filters-row">
+
+                <button
+                    class="filter-btn active"
+                    onclick="setTab('all', this)"
+                >
+                    All
+                </button>
+
+                <button
+                    class="filter-btn"
+                    onclick="setTab('HTML', this)"
+                >
+                    HTML
+                </button>
+
+                <button
+                    class="filter-btn"
+                    onclick="setTab('CSS', this)"
+                >
+                    CSS
+                </button>
+
+                <button
+                    class="filter-btn"
+                    onclick="setTab('JS', this)"
+                >
+                    JS
+                </button>
+
+                <button
+                    class="filter-btn"
+                    onclick="setTab('fav', this)"
+                >
+                    Stars
+                </button>
+
+                <button
+                    class="filter-btn"
+                    onclick="setSort('new')"
+                >
+                    New
+                </button>
+
+            </div>
+
+        </div>
+
+        <!-- ADD PROJECT -->
+        <div class="form-box">
+
+            
+            <section class="welcome-box">
+    <div>
+        <h1>CodeNest</h1>
+        <p>
+            Платформа для створення, збереження та перегляду репозиторіїв проєктів.
+        </p>
+    </div>
+
+    <button onclick="document.getElementById('name').focus()">
+        Create repository
+    </button>
+</section>
+
+<section class="form">
+
+            <h2>Додати репозиторій</h2>
+
+            <input
+                type="text"
+                id="name"
+                placeholder="Назва проєкту"
+            >
+
+            <input
+                type="text"
+                id="desc"
+                placeholder="Опис проєкту"
+
+                <textarea
+                id="code"
+                placeholder="Встав код проєкту..."
+                rows="8"
+            ></textarea>
+        
+
+            <input
+                type="text"
+                id="category"
+                placeholder="Категорія"
+            >
+
+            <button onclick="addProject()">
+                Додати
+            </button>
+
+        </div>
+
+        <!-- PROJECTS -->
+
+       
+
+        <div class="home-stats">
+    <div class="home-stat">
+        <span>Total repos</span>
+        <b id="totalRepos">0</b>
+    </div>
+
+    <div class="home-stat">
+        <span>Total likes</span>
+        <b id="totalLikes">0</b>
+    </div>
+
+    <div class="home-stat">
+        <span>Current user</span>
+        <b id="activeUser">Guest</b>
+    </div>
+</div>
+
+        <div id="projects" class="projects"></div>
+
+    </section>
+
+    <!-- AUTH MODAL -->
+    <div id="authModal" class="modal">
+
+        <div class="modal-content auth-box">
+
+            <h2 id="authTitle">Login</h2>
+
+            <input
+                type="text"
+                id="authUser"
+                placeholder="Username"
+            >
+
+            <input
+                type="password"
+                id="authPass"
+                placeholder="Password"
+            >
+
+            <button onclick="submitAuth()">
+                Continue
+            </button>
+
+            <button onclick="closeAuth()">
+                Close
+            </button>
+
+        </div>
+
+    </div>
+
+<script src="auth.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>

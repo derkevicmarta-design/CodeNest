@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>CodeNest Terminal</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="terminal">
+
+    <!-- HEADER -->
+    <div class="terminal-header">
+        <span>CodeNest Terminal</span>
+
+        <div>
+            <button onclick="saveProject()">Save</button>
+            <button onclick="goBack()">Exit</button>
+        </div>
+    </div>
+
+    <!-- INFO -->
+    <div class="terminal-info">
+        <h2 id="title"></h2>
+        <p id="desc"></p>
+
+        <div class="meta">
+            <span>author: <b id="author"></b></span>
+            <span>date: <b id="date"></b></span>
+            <span>category: <b id="category"></b></span>
+        </div>
+    </div>
+
+    <!-- TABS -->
+    <div class="editor-tabs">
+        <button class="file-tab active" onclick="switchFile('html')">HTML</button>
+        <button class="file-tab" onclick="switchFile('css')">CSS</button>
+        <button class="file-tab" onclick="switchFile('js')">JS</button>
+    </div>
+
+    <!-- EDITOR -->
+    <div class="editor">
+        <textarea id="html" class="code"></textarea>
+        <textarea id="css" class="code"></textarea>
+        <textarea id="js" class="code"></textarea>
+    </div>
+
+    <!-- PREVIEW -->
+     
+     <button class="run-btn" onclick="togglePreview()">
+    ▶ Run Code
+    </button>
+
+    <iframe id="preview"></iframe>
+    <div class="readme-box">
+
+    <h2>README.md</h2>
+
+    <textarea id="readme" placeholder="Write project description..."></textarea>
+
+</div>
+
+
+    <!-- COMMENTS -->
+    <div class="comments">
+        <h3>Comments</h3>
+
+        <textarea id="commentText"></textarea>
+        <button onclick="addComment()">Add</button>
+
+        <div id="commentsList"></div>
+    </div>
+
+</div>
+
+<script src="project.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile • CodeNest</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+
+        * { box-sizing: border-box; }
+
+        /* ===== BANNER ===== */
+        .profile-banner {
+            height: 160px;
+            background: linear-gradient(135deg, #1a2744, #0d1117, #1a3a2a);
+            background-size: 300% 300%;
+            animation: bannerMove 10s ease infinite;
+            position: relative;
+            border-bottom: 1px solid #30363d;
+        }
+
+        @keyframes bannerMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .edit-banner-btn {
+            position: absolute;
+            right: 15px;
+            bottom: 15px;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid #30363d;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        /* ===== LAYOUT ===== */
+        .profile-page {
+            display: flex;
+            gap: 24px;
+            max-width: 1100px;
+            margin: 24px auto;
+            padding: 0 20px;
+            align-items: flex-start;
+        }
+
+        /* ===== SIDEBAR ===== */
+        .profile-sidebar {
+
+            width: 260px;
+            flex-shrink: 0;
+            position: sticky;
+            top: 80px;
+
+            overflow: hidden;
+            text-align: center;
+        }
+
+       .avatar {
+    width: 150px;
+    height: 150px;
+
+    border-radius: 50%;
+    object-fit: cover;
+
+    display: block;
+
+    margin: 20px auto 18px auto;
+
+    border: 4px solid #30363d;
+    background: #161b22;
+}
+
+
+        .online-indicator {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            color: #8b949e;
+            margin-bottom: 4px;
+        }
+
+        .online-dot {
+            width: 10px;
+            height: 10px;
+            background: #2ea043;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #2ea043;
+            flex-shrink: 0;
+        }
+
+        .sidebar-username {
+            font-size: 22px;
+            font-weight: 700;
+            margin: 0 0 4px 0;
+            background: linear-gradient(90deg, #58a6ff, #79c0ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        #bioText {
+            color: #8b949e;
+            font-size: 14px;
+            line-height: 1.5;
+            margin: 8px 0 14px 0;
+        }
+
+        .follow-stats {
+            display: flex;
+            gap: 14px;
+            font-size: 13px;
+            color: #c9d1d9;
+            margin-bottom: 14px;
+        }
+
+        .follow-stats b { color: white; }
+
+        .edit-btn {
+            width: 100%;
+            padding: 8px;
+            background: #21262d;
+            border: 1px solid #30363d;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            margin-bottom: 14px;
+            transition: 0.2s;
+        }
+
+        .edit-btn:hover { background: #30363d; }
+
+        #editBox {
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 10px;
+            padding: 12px;
+            margin-bottom: 14px;
+            display: none;
+        }
+
+        #editBox input,
+        #editBox textarea {
+            width: 100%;
+            margin-top: 8px;
+            background: #161b22;
+            border: 1px solid #30363d;
+            color: white;
+            border-radius: 8px;
+            padding: 8px 10px;
+            font-size: 13px;
+        }
+
+        #editBox button {
+            width: 100%;
+            margin-top: 8px;
+            padding: 8px;
+            background: #238636;
+            border: none;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .sidebar-section {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 10px;
+            padding: 12px;
+            margin-bottom: 12px;
+        }
+
+        .sidebar-section h4 {
+            margin: 0 0 8px 0;
+            font-size: 12px;
+            color: #8b949e;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .sidebar-section p {
+            margin: 0;
+            font-size: 14px;
+            color: #58a6ff;
+            font-weight: 600;
+        }
+
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 8px;
+        }
+
+        .skills-list span {
+            background: #21262d;
+            border: 1px solid #30363d;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            transition: 0.2s;
+        }
+
+        .skills-list span:hover {
+            background: #58a6ff;
+            color: #0d1117;
+            border-color: #58a6ff;
+        }
+
+        .skill-input-row {
+            display: flex;
+            gap: 6px;
+        }
+
+        .skill-input-row input {
+            flex: 1;
+            padding: 5px 8px;
+            background: #0d1117;
+            border: 1px solid #30363d;
+            color: white;
+            border-radius: 6px;
+            font-size: 12px;
+        }
+
+        .skill-input-row button {
+            padding: 5px 10px;
+            background: #238636;
+            border: none;
+            color: white;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        /* ===== MAIN ===== */
+        .profile-main {
+            flex: 1;
+            min-width: 0;
+            animation: fadeUp 0.4s ease;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 10px;
+            padding: 14px;
+            text-align: center;
+            transition: 0.2s;
+        }
+
+        .stat-card:hover {
+            border-color: #58a6ff;
+            transform: translateY(-3px);
+        }
+
+        .stat-card h4 {
+            margin: 0 0 6px 0;
+            font-size: 11px;
+            color: #8b949e;
+            text-transform: uppercase;
+        }
+
+        .stat-card h2 {
+            margin: 0;
+            font-size: 20px;
+            color: white;
+        }
+
+        .section-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #c9d1d9;
+            margin: 0 0 10px 0;
+        }
+
+        .badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .badge {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 20px;
+            padding: 6px 14px;
+            font-size: 13px;
+            transition: 0.2s;
+        }
+
+        .badge:hover {
+            border-color: #58a6ff;
+            transform: scale(1.05);
+        }
+
+        #pinnedProjects {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        #pinnedProjects .project {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 10px;
+            padding: 14px;
+            transition: 0.2s;
+        }
+
+        #pinnedProjects .project:hover {
+            border-color: #58a6ff;
+            transform: translateY(-3px);
+        }
+
+        .activity-section { margin-bottom: 20px; }
+
+        .activity-grid {
+            display: grid;
+            grid-template-columns: repeat(52, 11px);
+            grid-template-rows: repeat(7, 11px);
+            gap: 3px;
+            overflow-x: auto;
+            padding-bottom: 4px;
+        }
+
+        .activity-cell {
+            width: 11px;
+            height: 11px;
+            background: #161b22;
+            border-radius: 2px;
+        }
+
+        .activity-cell.active { background: #39d353; }
+
+        .profile-tabs {
+            display: flex;
+            gap: 2px;
+            border-bottom: 1px solid #30363d;
+            margin-bottom: 14px;
+        }
+
+        .profile-tabs .tab {
+            background: transparent;
+            border: none;
+            color: #8b949e;
+            padding: 8px 14px;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -1px;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+
+        .profile-tabs .tab:hover { color: white; }
+
+        .profile-tabs .tab.active {
+            color: white;
+            border-bottom-color: #f78166;
+        }
+
+        #myProjects {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        #myProjects .project {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 10px;
+            padding: 14px;
+            transition: 0.2s;
+        }
+
+        #myProjects .project:hover { border-color: #58a6ff; }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 10px;
+            margin-bottom: 8px;
+            transition: 0.2s;
+        }
+
+        .activity-item:hover {
+            transform: translateX(4px);
+            border-color: #58a6ff;
+        }
+
+        .activity-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #2ea043;
+            box-shadow: 0 0 8px #2ea043;
+            flex-shrink: 0;
+        }
+
+        .empty-box {
+            padding: 30px;
+            text-align: center;
+            border-radius: 10px;
+            background: #161b22;
+            border: 1px dashed #30363d;
+            color: #8b949e;
+            font-size: 14px;
+        }
+
+        @media (max-width: 900px) {
+            .profile-page { flex-direction: column; }
+            .profile-sidebar { width: 100%; position: static; }
+            .avatar { width: 120px; height: 120px; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            #pinnedProjects { grid-template-columns: 1fr; }
+        }
+
+/* ===== ABOUT TAB ===== */
+
+.about-card {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 14px;
+    padding: 22px;
+}
+
+.about-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+.about-item {
+    background: #1b2330;
+    border: 1px solid #30363d;
+    border-radius: 10px;
+    padding: 14px;
+}
+
+.about-label {
+    font-size: 11px;
+    color: #8b949e;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+}
+
+.about-value {
+    font-size: 15px;
+    color: white;
+}
+
+/* ===== RECENT ACTIVITY ===== */
+
+.activity-feed {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.activity-card {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+
+    background: linear-gradient(
+        145deg,
+        #161b22,
+        #1b2330
+    );
+
+    border: 1px solid #30363d;
+    border-radius: 14px;
+
+    padding: 16px;
+
+    transition: 0.25s;
+}
+
+.activity-card:hover {
+    transform: translateX(6px);
+    border-color: #58a6ff;
+
+    box-shadow:
+        0 0 20px rgba(88,166,255,0.12);
+}
+
+.activity-icon {
+    width: 42px;
+    height: 42px;
+
+    border-radius: 12px;
+
+    background: rgba(88,166,255,0.12);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 18px;
+
+    flex-shrink: 0;
+}
+
+.activity-content {
+    flex: 1;
+}
+
+.activity-title {
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.activity-text {
+    color: #8b949e;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.activity-time {
+    color: #6e7681;
+    font-size: 11px;
+    margin-top: 8px;
+}
+
+/* ===== REPO CODE ===== */
+
+.repo-code {
+    margin-top: 12px;
+    background: #0d1117;
+    border: 1px solid #30363d;
+    border-radius: 10px;
+    padding: 12px;
+
+    color: #79c0ff;
+
+    font-size: 12px;
+    line-height: 1.5;
+
+    white-space: pre-wrap;
+    overflow-x: auto;
+    max-height: 220px;
+}
+
+/* ===== CODE BUTTON ===== */
+
+.code-btn {
+    margin-top: 10px;
+    padding: 8px 14px;
+
+    background: #21262d;
+    border: 1px solid #30363d;
+    color: white;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    font-size: 13px;
+
+    transition: 0.2s;
+}
+
+.code-btn:hover {
+    background: #58a6ff;
+    color: #0d1117;
+    border-color: #58a6ff;
+}
+
+/* ===== PROJECT PREVIEW MODAL ===== */
+
+.preview-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.65);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+}
+
+.preview-box {
+    width: 80%;
+    height: 80%;
+    background: #0d1117;
+    border: 1px solid #30363d;
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.preview-header {
+    height: 50px;
+    background: #161b22;
+    border-bottom: 1px solid #30363d;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 18px;
+}
+
+.preview-header h3 {
+    margin: 0;
+    color: white;
+}
+
+.preview-header button {
+    background: #21262d;
+    border: 1px solid #30363d;
+    color: white;
+    border-radius: 8px;
+    padding: 5px 12px;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+#previewFrame {
+    width: 100%;
+    height: calc(100% - 50px);
+    border: none;
+    background: white;
+}
+    
+ /* ===== PROFILE ROLE ===== */
+
+.profile-role {
+    display: inline-block;
+    margin: 4px 0 10px 0;
+    padding: 5px 10px;
+
+    background: rgba(88,166,255,0.12);
+    color: #58a6ff;
+
+    border: 1px solid rgba(88,166,255,0.25);
+    border-radius: 20px;
+
+    font-size: 12px;
+    font-weight: 600;
+}   
+   
+/* ===== PROFILE HEADER AVATAR FIX ===== */
+
+.header .right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#headerAvatar {
+    position: absolute;
+    top: 96px;
+    right: 28px;
+
+    width: 48px;
+    height: 48px;
+
+    border-radius: 50%;
+    object-fit: cover;
+
+    border: 2px solid #30363d;
+    box-shadow: 0 0 18px rgba(88,166,255,0.25);
+
+    z-index: 1000;
+}   
+   
+/* ===== PROFILE AVATAR MENU ===== */
+
+#headerAvatar {
+    position: absolute;
+    top: 96px;
+    right: 32px;
+
+    width: 52px;
+    height: 52px;
+
+    border-radius: 50%;
+    object-fit: cover;
+
+    border: 2px solid #30363d;
+    background: #161b22;
+
+    cursor: pointer;
+    z-index: 1000;
+}
+
+.avatar-menu {
+    display: none;
+
+    position: absolute;
+    top: 155px;
+    right: 32px;
+
+    width: 250px;
+
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 14px;
+
+    padding: 16px;
+
+    z-index: 1001;
+
+    box-shadow: 0 0 25px rgba(0,0,0,0.35);
+}
+
+.avatar-menu h3 {
+    margin: 0 0 14px 0;
+    color: white;
+    border-bottom: 1px solid #30363d;
+    padding-bottom: 12px;
+}
+
+.avatar-menu button {
+    width: 100%;
+    margin-top: 8px;
+
+    padding: 10px;
+
+    background: #21262d;
+    color: white;
+
+    border: 1px solid #30363d;
+    border-radius: 8px;
+
+    cursor: pointer;
+}
+
+.avatar-menu button:hover {
+    background: #238636;
+}   
+   
+#headerAvatar {
+    position: absolute;
+    top: 96px;
+    right: 32px;
+
+    width: 52px;
+    height: 52px;
+
+    border-radius: 50%;
+    object-fit: cover;
+
+    border: 2px solid #30363d;
+    background: #161b22;
+
+    cursor: pointer;
+    z-index: 9999;
+}
+
+.avatar-menu {
+    display: none;
+
+    position: absolute;
+    top: 155px;
+    right: 32px;
+
+    width: 250px;
+
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 14px;
+
+    padding: 16px;
+
+    z-index: 10000;
+}
+
+.avatar-menu h3 {
+    margin: 0 0 14px 0;
+    color: white;
+    border-bottom: 1px solid #30363d;
+    padding-bottom: 12px;
+}
+
+.avatar-menu button {
+    width: 100%;
+    margin-top: 8px;
+    padding: 10px;
+
+    background: #21262d;
+    color: white;
+
+    border: 1px solid #30363d;
+    border-radius: 8px;
+
+    cursor: pointer;
+}   
+   
+   .profile-sidebar {
+    overflow: hidden;
+}
+
+.avatar {
+    width: 150px !important;
+    height: 150px !important;
+    margin: 20px auto 18px auto !important;
+} 
+   </style>
+</head>
+<body>
+
+<!-- BANNER -->
+<div class="profile-banner" id="profileBanner">
+    <button class="edit-banner-btn" onclick="changeBanner()">
+    Change Banner
+</button>
+
+<!-- HEADER -->
+<header class="header">
+    <div class="left">
+        <h2>CodeNest</h2>
+    </div>
+
+    <div class="right">
+        <a href="index.html">
+            <button>All projects</button>
+        </a>
+
+        <a href="myprojects.html">
+            <button>My repos</button>
+        </a>
+
+        <button onclick="logout()">Logout</button>
+
+        <span class="header-user-name">Marta</span>
+    </div>
+</header>
+   
+
+<div id="avatarMenu" class="avatar-menu">
+    <h3 id="avatarMenuName">Marta</h3>
+
+    <button onclick="document.getElementById('avatarInput').click()">
+        Change avatar
+    </button>
+
+    <button onclick="logout()">
+        Logout
+    </button>
+</div>
+
+<div id="avatarMenu" class="avatar-menu">
+    <h3 id="avatarMenuName">Marta</h3>
+
+    <button onclick="document.getElementById('avatarInput').click()">
+        Change avatar
+    </button>
+
+    <button onclick="logout()">
+        Logout
+    </button>
+</div>
+    </div>
+</header>
+
+<!-- PROFILE -->
+<div class="profile-page">
+
+    <!-- SIDEBAR -->
+    <div class="profile-sidebar">
+
+        <img
+        id="avatarImg"
+        class="avatar"
+        src="images/avatar.jpg"
+        alt="avatar"
+    >
+
+
+        <div class="online-indicator">
+    
+            <div class="online-dot"></div>
+            <span>Online</span>
+        </div>
+
+        <h2 class="sidebar-username" id="usernameDisplay">Marta</h2>
+
+        <div class="profile-role">
+           Frontend Developer
+       </div>
+
+        <p id="bioText">No bio yet</p>
+
+        <div class="follow-stats">
+            <span><b id="followersCount">0</b> followers</span>
+            <span><b id="followingCount">0</b> following</span>
+        </div>
+
+        <button class="edit-btn" onclick="toggleEdit()">✏️ Edit profile</button>
+
+        <div id="editBox">
+            <input type="file" id="avatarInput" accept="image/*">
+            <textarea id="bioInput" placeholder="Про себе" rows="3"></textarea>
+            <button onclick="saveProfile()">💾 Save</button>
+        </div>
+
+        <div class="sidebar-section">
+    <h4>Skills</h4>
+
+    <div class="skills-list" id="skillsList"></div>
+
+    <div class="skill-input-row">
+        <input
+            type="text"
+           <input
+       type="text"
+       id="skillInput"
+       placeholder="Add skill..."
+       onkeypress="if(event.key==='Enter'){addSkill()}"
+>
+
+        <button onclick="addSkill()">
+            +
+        </button>
+    </div>
+</div>
+
+<div class="sidebar-section">
+    <h4>Rank</h4>
+    <p id="rankText">Beginner</p>
+</div>
+
+<div class="sidebar-section">
+    <h4>Contributions this month</h4>
+    <p id="contribCount">0</p>
+</div>
+
+</div>
+
+    <!-- MAIN -->
+    <div class="profile-main">
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h4>Projects</h4>
+                <h2 id="totalProjectsStat">0</h2>
+            </div>
+            <div class="stat-card">
+                <h4>Likes</h4>
+                <h2 id="totalLikesStat">0</h2>
+            </div>
+            <div class="stat-card">
+                <h4>Top Lang</h4>
+                <h2 id="topLangStat">—</h2>
+            </div>
+            <div class="stat-card">
+                <h4>Views</h4>
+                <h2 id="viewsStat">0</h2>
+            </div>
+        </div>
+
+        <p class="section-title">Achievements</p>
+        <div class="badges">
+            <div class="badge">🚀 First Project</div>
+            <div class="badge">⭐ 10 Likes</div>
+            <div class="badge">💻 Web Developer</div>
+        </div>
+
+        <p class="section-title">Pinned repositories</p>
+        <div id="pinnedProjects"></div>
+
+<div class="activity-section">
+
+    <p class="section-title">
+        Activity this year
+    </p>
+
+    <div id="activityGrid" class="activity-grid">
+
+        <span class="activity-cell active"></span>
+        <span class="activity-cell active"></span>
+        <span class="activity-cell active"></span>
+        <span class="activity-cell active"></span>
+        <span class="activity-cell"></span>
+        <span class="activity-cell"></span>
+        <span class="activity-cell"></span>
+        <span class="activity-cell"></span>
+        <span class="activity-cell"></span>
+        <span class="activity-cell"></span>
+        <span class="activity-cell"></span>
+        <span class="activity-cell"></span>
+        <span class="activity-cell"></span>
+        <span class="activity-cell"></span>
+
+        <span class="activity-cell"></span>
+        <span class="activity-cell active"></span>
+        <span class="activity-cell active"></span>
+        <span class="activity-cell"></span>
+        <span class="activity-cell"></span>
+        <span class="activity-cell"></span>
+        <span class="activity-cell active"></span>
+        <span class="activity-cell"></span>
+        <span class="activity-cell"></span>
+        <span class="activity-cell"></span>
+        <span class="activity-cell"></span>
+        <span class="activity-cell"></span>
+        <span class="activity-cell"></span>
+        <span class="activity-cell"></span>
+
+        <span class="activity-cell"></span>
+        <span class="activity-cell"></span>
+        <span class="activity-cell active"></span>
+        <span class="activity-cell active"></span>
+        <span class="activity-cell"></span>
+        <span class="activity-cell"></span>
+        <span class="activity-cell"></span>
+        <span class="activity-cell active"></span>
+        <span class="activity-cell"></span>
+        <span class="activity-cell"></span>
+        <span class="activity-cell"></span>
+        <span class="activity-cell"></span>
+        <span class="activity-cell"></span>
+        <span class="activity-cell"></span>
+
+    </div>
+
+</div> 
+        <div class="profile-tabs">
+            <button class="tab active" onclick="setProfileTab('repos', this)">📁 Repos</button>
+            <button class="tab" onclick="setProfileTab('stars', this)">⭐ Stars</button>
+            <button class="tab" onclick="setProfileTab('activity', this)">⚡ Activity</button>
+            <button class="tab" onclick="setProfileTab('about', this)">👤 About</button>
+        </div>
+
+        <div id="myProjects"></div>
+
+    </div>
+
+</div>
+
+<div id="previewModal" class="preview-modal">
+    <div class="preview-box">
+        <div class="preview-header">
+            <h3>Project Preview</h3>
+            <button onclick="closePreview()">×</button>
+        </div>
+
+        <iframe id="previewFrame"></iframe>
+    </div>
+</div>
+
+<script src="auth.js"></script>
+<script src="profile.js"></script>
+
+<div class="profile-signature">
+    Developed by Marta • CodeNest
+</div>
+
+<script>
+function setProfileTab(type, btn) {
+    document.querySelectorAll(".tab").forEach(tab => {
+        tab.classList.remove("active");
+    });
+
+    btn.classList.add("active");
+
+    let box = document.getElementById("myProjects");
+
+    if (type === "repos") {
+        box.innerHTML = '<div class="empty-box">Тут будуть твої репозиторії</div>';
+    }
+
+    if (type === "stars") {
+        box.innerHTML = '<div class="empty-box">Ще немає збережених репозиторіїв</div>';
+    }
+
+    if (type === "activity") {
+        box.innerHTML = '<div class="empty-box">Активність користувача</div>';
+    }
+
+    if (type === "about") {
+        box.innerHTML = `
+            <div class="about-card">
+                <div class="about-grid">
+                    <div class="about-item">
+                        <div class="about-label">Username</div>
+                        <div class="about-value">Marta</div>
+                    </div>
+
+                    <div class="about-item">
+                        <div class="about-label">Role</div>
+                        <div class="about-value">Frontend Developer</div>
+                    </div>
+
+                    <div class="about-item">
+                        <div class="about-label">Stack</div>
+                        <div class="about-value">HTML • CSS • JavaScript</div>
+                    </div>
+
+                    <div class="about-item">
+                        <div class="about-label">Status</div>
+                        <div class="about-value">Active</div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+}
+
+function openEditProfile() {
+    let bio = prompt("Введи новий опис профілю:");
+
+    if (bio) {
+        document.getElementById("bioText").innerText = bio;
+    }
+}
+
+function changeBanner() {
+    let url = prompt("Встав посилання на банер:");
+
+    if (url) {
+        document.getElementById("profileBanner").style.backgroundImage = `url(${url})`;
+        document.getElementById("profileBanner").style.backgroundSize = "cover";
+        document.getElementById("profileBanner").style.backgroundPosition = "center";
+    }
+}
+</script>
+
+<script>
+function addSkill() {
+    let input = document.getElementById("skillInput");
+    let list = document.getElementById("skillsList");
+
+    if (!input || !list) return;
+
+    let skill = input.value.trim();
+
+    if (skill === "") return;
+
+    let skills = JSON.parse(localStorage.getItem("profileSkills")) || [];
+
+    skills.push(skill);
+
+    localStorage.setItem("profileSkills", JSON.stringify(skills));
+
+    input.value = "";
+
+    showSkills();
+}
+
+function showSkills() {
+    let list = document.getElementById("skillsList");
+
+    if (!list) return;
+
+    let skills = JSON.parse(localStorage.getItem("profileSkills")) || [];
+
+    list.innerHTML = "";
+
+    skills.forEach(skill => {
+        let span = document.createElement("span");
+        span.innerText = skill;
+        list.appendChild(span);
+    });
+}
+
+showSkills();
+</script>
+
+
+</body>
+</html>

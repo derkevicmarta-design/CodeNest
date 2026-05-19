@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+
+    <style>
+
+        body{
+            margin:0;
+            height:100vh;
+
+            display:flex;
+            justify-content:center;
+            align-items:center;
+
+            background:#0f172a;
+            font-family:Arial;
+        }
+
+        .box{
+
+            width:320px;
+
+            background:#1e293b;
+
+            padding:30px;
+
+            border-radius:12px;
+
+            box-shadow:0 0 20px rgba(0,0,0,0.4);
+        }
+
+        h2{
+            color:white;
+            text-align:center;
+        }
+
+        input{
+
+            width:100%;
+
+            padding:12px;
+
+            margin-top:10px;
+
+            border:none;
+
+            border-radius:8px;
+
+            box-sizing:border-box;
+        }
+
+        button{
+
+            width:100%;
+
+            padding:12px;
+
+            margin-top:15px;
+
+            border:none;
+
+            border-radius:8px;
+
+            background:#3b82f6;
+
+            color:white;
+
+            cursor:pointer;
+        }
+
+        button:hover{
+            background:#2563eb;
+        }
+
+        p{
+            color:white;
+            text-align:center;
+            cursor:pointer;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="box">
+
+    <h2 id="title">Вхід</h2>
+
+    <input id="loginUser" placeholder="Логін">
+    <input id="loginPass" type="password" placeholder="Пароль">
+    >
+
+  <button onclick="login()">
+    Продовжити
+  </button>
+    <p onclick="toggleMode()">
+        Змінити режим
+    </p>
+
+</div>
+
+<script src="auth.js"></script>
+
+</body>
+</html>
