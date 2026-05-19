@@ -47,9 +47,17 @@
 
     <!-- PREVIEW -->
      
-     <button class="run-btn" onclick="togglePreview()">
+     <textarea id="js"
+class="code"
+style="display:none"
+placeholder="JavaScript..."
+></textarea>
+
+<button onclick="updatePreview()" class="run-btn">
     ▶ Run Code
-    </button>
+</button>
+
+
 
     <iframe id="preview"></iframe>
     <div class="readme-box">
