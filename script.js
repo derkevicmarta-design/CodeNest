@@ -31,6 +31,8 @@ window.onload = function () {
 
             searchValue = e.target.value.toLowerCase();
 
+            addDefaultProjects();
+
             renderProjects();
         });
     }
@@ -558,4 +560,60 @@ let avatar = document.getElementById("headerAvatar");
 
 if (avatar) {
     avatar.src = "https://derkevicmarta-design.github.io/CodeNest/images/avatar.jpg";
+}
+
+function addDefaultProjects() {
+
+    if (projects.length > 0) return;
+
+    projects = [
+        {
+            id: 1,
+            name: "Calculator",
+            desc: "Simple calculator built with JavaScript",
+            category: "JavaScript",
+            author: "Marta",
+            likes: 12,
+            likedUsers: [],
+            fav: false,
+            code: ""
+        },
+        {
+            id: 2,
+            name: "To-Do List",
+            desc: "Task manager for daily tasks",
+            category: "JavaScript",
+            author: "Marta",
+            likes: 8,
+            likedUsers: [],
+            fav: false,
+            code: ""
+        },
+        {
+            id: 3,
+            name: "Notes App",
+            desc: "Mini app for creating notes",
+            category: "JavaScript",
+            author: "Marta",
+            likes: 5,
+            likedUsers: [],
+            fav: false,
+            code: ""
+        },
+        {
+            id: 4,
+            name: "Weather Card",
+            desc: "Modern weather UI card",
+            category: "HTML",
+            author: "Marta",
+            likes: 6,
+            likedUsers: [],
+            fav: false,
+            code: ""
+        }
+    ];
+
+    localStorage.setItem("projects", JSON.stringify(projects));
+
+    renderProjects();
 }
