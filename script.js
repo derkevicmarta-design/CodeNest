@@ -1,390 +1,361 @@
-let savedVersion = localStorage.getItem("projectsVersion");
+let currentUser = localStorage.getItem("currentUser");
 
-if (savedVersion !== "2") {
-    localStorage.removeItem("projects");
-    localStorage.setItem("projectsVersion", "2");
-}
-
+let index = localStorage.getItem("openProject");
 let projects = JSON.parse(localStorage.getItem("projects")) || [];
-let currentUser = localStorage.getItem("currentUser") || "Marta";
 
-localStorage.setItem("currentUser", currentUser);
+let p = projects[index];
 
-let currentTab = "all";
-let currentSort = "new";
-let searchValue = "";
-let authMode = "login";
+if (!p) {
+    document.body.innerHTML =
+    "<h1>Проєкт не знайдено</h1>";
 
-/* DEFAULT REPOSITORIES */
-
-function addDefaultProjects() {
-    if (projects.length > 0 && projects[0].html) return;
-
-    projects = [
-        {
-            id: 1,
-            name: "Calculator",
-            desc: "Calculator with + - × ÷ operations",
-            category: "JavaScript",
-            author: "Marta",
-            date: new Date().toLocaleDateString(),
-            likes: 12,
-            likedUsers: [],
-            fav: false,
-
-            html: `
-<h1>Calculator</h1>
-
-<input id="a" type="number" placeholder="First number">
-<input id="b" type="number" placeholder="Second number">
-
-<div>
-    <button onclick="calc('+')">+</button>
-    <button onclick="calc('-')">-</button>
-    <button onclick="calc('*')">×</button>
-    <button onclick="calc('/')">÷</button>
-</div>
-
-<h2 id="result">Result: —</h2>
-`,
-
-            css: `
-body {
-    font-family: Arial;
-    background: #0d1117;
-    color: white;
-    text-align: center;
-    padding: 40px;
+    throw new Error("Project not found");
 }
 
-input {
-    padding: 10px;
-    margin: 6px;
-    border-radius: 8px;
-    border: 1px solid #30363d;
+
+/* SAFE GET */
+
+function el(id){
+
+return document.getElementById(id);
+
 }
 
-button {
-    padding: 10px 15px;
-    margin: 5px;
-    background: #238636;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-}
 
-h1 {
-    color: #58a6ff;
-}
-`,
+/* LOAD DATA */
 
-            js: `
-function calc(operator) {
-    let a = Number(document.getElementById("a").value);
-    let b = Number(document.getElementById("b").value);
-    let result;
+if(el("title"))
+el("title").innerText=p.name;
 
-    if (operator === "+") result = a + b;
-    if (operator === "-") result = a - b;
-    if (operator === "*") result = a * b;
-    if (operator === "/") result = b === 0 ? "Error" : a / b;
+if(el("desc"))
+el("desc").innerText=p.desc;
 
-    document.getElementById("result").innerText = "Result: " + result;
-}
-`
-        },
+if(el("author"))
+el("author").innerText=p.author;
 
-        {
-            id: 2,
-            name: "To-Do List",
-            desc: "Task manager for daily tasks",
-            category: "JavaScript",
-            author: "Marta",
-            date: new Date().toLocaleDateString(),
-            likes: 8,
-            likedUsers: [],
-            fav: false,
+if(el("date"))
+el("date").innerText=p.date;
 
-            html: `
-<h1>To-Do List</h1>
+if(el("category"))
+el("category").innerText=
+p.category||"—";
 
-<input id="taskInput" placeholder="Enter task...">
-<button onclick="addTask()">Add</button>
 
-<ul id="taskList"></ul>
-`,
+/* LOAD CODE */
 
-            css: `
-body {
-    font-family: Arial;
-    background: #0d1117;
+if(el("html"))
+el("html").value=
+p.html||"";
 
-/* INIT */
+if(el("css"))
+el("css").value=
+p.css||"";
 
-window.onload = function () {
-    addDefaultProjects();
-    loadHeaderProfile();
-    renderProjects();
-    updateCount();
+if(el("js"))
+el("js").value=
+p.js||"";
 
-    let search = document.getElementById("search");
+if(el("readme"))
+el("readme").value=
+p.readme||"";
 
-    if (search) {
-        search.addEventListener("input", function (e) {
-            searchValue = e.target.value.toLowerCase();
-            renderProjects();
-        });
-    }
-};
-
-/* ADD PROJECT */
-
-function addProject() {
-    let name = document.getElementById("name").value;
-    let desc = document.getElementById("desc").value;
-    let category = document.getElementById("category")?.value || "";
-    let code = document.getElementById("code")?.value || "";
-
-    if (!name || !desc) return;
-
-    projects.push({
-        id: Date.now(),
-        name: name,
-        desc: desc,
-        category: category,
-        author: currentUser,
-        date: new Date().toLocaleDateString(),
-        likes: 0,
-        likedUsers: [],
-        fav: false,
-        html: code,
-        css: "",
-        js: "",
-        readme: ""
-    });
-
-    save();
-
-    document.getElementById("name").value = "";
-    document.getElementById("desc").value = "";
-
-    if (document.getElementById("category")) {
-        document.getElementById("category").value = "";
-    }
-
-    if (document.getElementById("code")) {
-        document.getElementById("code").value = "";
-    }
-
-    renderProjects();
-}
-
-/* RENDER PROJECTS */
-
-function renderProjects() {
-    let container = document.getElementById("projects");
-
-    if (!container) return;
-
-    container.innerHTML = "";
-
-    let list = [...projects];
-
-    if (currentTab === "fav") {
-        list = list.filter(p => p.fav);
-    }
-
-    if (currentSort === "new") {
-        list = list.slice().reverse();
-    }
-
-    if (searchValue) {
-        list = list.filter(p =>
-            p.name.toLowerCase().includes(searchValue) ||
-            p.desc.toLowerCase().includes(searchValue) ||
-            p.author.toLowerCase().includes(searchValue)
-        );
-    }
-
-    if (list.length === 0) {
-        container.innerHTML = `
-            <div class="empty-box">
-                Репозиторії не знайдені
-            </div>
-        `;
-        return;
-    }
-
-    list.forEach(function (p) {
-        let index = projects.indexOf(p);
-
-        container.innerHTML += `
-            <div class="project">
-
-                <h3>${p.name}</h3>
-
-                <p>${p.desc}</p>
-
-                <div class="project-actions">
-
-                    <button onclick="openModal(${index})" class="open-btn">
-                        Відкрити
-                    </button>
-
-                    <button onclick="likeProject(${index})" class="like-btn ${p.likedUsers?.includes(currentUser) ? "liked" : ""}">
-                        ${p.likedUsers?.includes(currentUser) ? "Liked" : "Like"}
-                    </button>
-
-                    <button onclick="toggleFav(${index})" class="fav-btn ${p.fav ? "active" : ""}">
-                        ${p.fav ? "Saved" : "Save"}
-                    </button>
-
-                    <button onclick="deleteProject(${index})" class="main-delete-btn">
-                        Видалити
-                    </button>
-
-                </div>
-
-                <div class="project-meta">
-                    <span>👤 ${p.author}</span>
-                    <span>📅 ${p.date || "—"}</span>
-                    <span>🏷 ${p.category || "—"}</span>
-                    <span>❤️ ${p.likes || 0}</span>
-                </div>
-
-            </div>
-        `;
-    });
-
-    updateCount();
-}
-
-/* ACTIONS */
-
-function openModal(index) {
-    localStorage.setItem("openProject", index);
-    window.location.href = "project.html";
-}
-
-function deleteProject(index) {
-    let agree = confirm("Видалити цей репозиторій?");
-
-    if (!agree) return;
-
-    projects.splice(index, 1);
-    save();
-    renderProjects();
-}
-
-function likeProject(index) {
-    let project = projects[index];
-
-    if (!project.likedUsers) {
-        project.likedUsers = [];
-    }
-
-    if (project.likedUsers.includes(currentUser)) {
-        project.likedUsers = project.likedUsers.filter(user => user !== currentUser);
-        project.likes = Math.max((project.likes || 1) - 1, 0);
-    } else {
-        project.likedUsers.push(currentUser);
-        project.likes = (project.likes || 0) + 1;
-    }
-
-    save();
-    renderProjects();
-}
-
-function toggleFav(index) {
-    projects[index].fav = !projects[index].fav;
-    save();
-    renderProjects();
-}
-
-/* FILTERS */
-
-function setTab(type, btn) {
-    currentTab = type;
-
-    document.querySelectorAll(".filter-btn").forEach(function (b) {
-        b.classList.remove("active");
-    });
-
-    if (btn) {
-        btn.classList.add("active");
-    }
-
-    renderProjects();
-}
-
-function setSort(type) {
-    currentSort = type;
-    renderProjects();
-}
-
-function clearSearch() {
-    let search = document.getElementById("search");
-
-    if (search) {
-        search.value = "";
-    }
-
-    searchValue = "";
-    renderProjects();
-}
 
 /* SAVE */
 
-function save() {
-    localStorage.setItem("projects", JSON.stringify(projects));
+function autoSave(){
+
+let projects=
+JSON.parse(
+localStorage.getItem("projects")
+)||[];
+
+
+if(!projects[index]) return;
+
+
+projects[index].html=
+el("html")?.value||"";
+
+projects[index].css=
+el("css")?.value||"";
+
+projects[index].js=
+el("js")?.value||"";
+
+projects[index].readme=
+el("readme")?.value||"";
+
+
+localStorage.setItem(
+"projects",
+JSON.stringify(projects)
+);
+
 }
 
-/* COUNT */
 
-function updateCount() {
-    let count = document.getElementById("count");
+/* EDITOR */
 
-    if (count) {
-        count.textContent = projects.length;
-    }
+function bindEditors(){
+
+["html","css","js"]
+
+.forEach(id=>{
+
+if(el(id)){
+
+el(id)
+
+.addEventListener(
+"input",
+
+()=>{
+
+autoSave();
+
+updatePreview();
+
 }
 
-/* AUTH */
+);
 
-function logout() {
-    localStorage.removeItem("currentUser");
-    window.location.href = "login.html";
 }
 
-/* MENU */
+});
 
-function toggleMenu() {
-    let menu = document.getElementById("dropdownMenu");
-
-    if (!menu) return;
-
-    menu.style.display =
-        menu.style.display === "block" ? "none" : "block";
 }
 
-function goProfile() {
-    window.location.href = "profile.html";
+bindEditors();
+
+
+/* PREVIEW */
+
+function updatePreview(){
+
+let html=
+el("html")?.value||"";
+
+let css=
+el("css")?.value||"";
+
+let js=
+el("js")?.value||"";
+
+
+let iframe=
+el("preview");
+
+if(!iframe) return;
+
+
+iframe.srcdoc=`
+
+<html>
+
+<head>
+
+<style>
+
+${css}
+
+</style>
+
+</head>
+
+<body>
+
+${html}
+
+<script>
+
+${js}
+
+<\/script>
+
+</body>
+
+</html>
+
+`;
+
 }
 
-/* HEADER */
+updatePreview();
 
-function loadHeaderProfile() {
-    currentUser = localStorage.getItem("currentUser") || "Marta";
 
-    let avatar = document.getElementById("headerAvatar");
-    let username = document.getElementById("menuUsername");
+/* SAVE BUTTON */
 
-    if (username) {
-        username.innerText = currentUser;
-    }
+function saveProject(){
 
-    if (avatar) {
-        avatar.src = "https://derkevicmarta-design.github.io/CodeNest/images/avatar.jpg";
-    }
+autoSave();
+
+alert("Saved!");
+
 }
+
+
+/* EXIT */
+
+function goBack(){
+
+window.location.href=
+"index.html";
+
+}
+
+
+/* COMMENTS */
+
+function addComment(){
+
+let text=
+el("commentText")?.value;
+
+if(!text) return;
+
+
+if(!p.comments)
+p.comments=[];
+
+
+p.comments.push({
+
+user:
+currentUser||
+"Guest",
+
+text:text,
+
+date:
+new Date()
+.toLocaleDateString()
+
+});
+
+
+localStorage.setItem(
+"projects",
+JSON.stringify(projects)
+);
+
+
+el("commentText").value="";
+
+
+renderComments();
+
+}
+
+
+function renderComments(){
+
+let list=
+el("commentsList");
+
+if(!list) return;
+
+
+list.innerHTML="";
+
+
+let comments=
+p.comments||[];
+
+
+[...comments]
+
+.reverse()
+
+.forEach(c=>{
+
+let div=
+document.createElement(
+"div"
+);
+
+
+div.className=
+"project";
+
+
+div.innerHTML=`
+
+<h4>
+
+${c.user}
+
+</h4>
+
+<p>
+
+${c.text}
+
+</p>
+
+<small>
+
+${c.date}
+
+</small>
+
+`;
+
+
+list.appendChild(div);
+
+});
+
+}
+
+renderComments();
+
+
+/* FILE SWITCH */
+
+function switchFile(file){
+
+document
+
+.querySelectorAll(".code")
+
+.forEach(item=>{
+
+item.style.display=
+"none";
+
+});
+
+
+let active=
+document.getElementById(file);
+
+if(active){
+
+active.style.display=
+"block";
+
+}
+
+
+document
+
+.querySelectorAll(
+".file-tab"
+)
+
+.forEach(btn=>{
+
+btn.classList.remove(
+"active"
+);
+
+});
+
+
+event.target.classList.add(
+"active"
+);
+
+}
+
+switchFile("html");
