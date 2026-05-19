@@ -22,40 +22,211 @@ window.onload = function () {
     projects = [
 
         {
-            id:1,
-            name:"Calculator",
-            desc:"Simple calculator built with JavaScript",
-            category:"JavaScript",
-            author:"Marta",
-            likes:12
-        },
+    id:1,
+    name:"Calculator",
+    desc:"Simple calculator built with JavaScript",
+    category:"JavaScript",
+    author:"Marta",
+    likes:12,
+
+    code: `
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body{
+font-family:Arial;
+text-align:center;
+padding:30px;
+}
+input{
+padding:10px;
+margin:5px;
+}
+button{
+padding:10px;
+}
+</style>
+</head>
+<body>
+
+<h1>Calculator</h1>
+
+<input id="num1" placeholder="Number 1">
+<input id="num2" placeholder="Number 2">
+
+<button onclick="calculate()">+</button>
+
+<h2 id="result"></h2>
+
+<script>
+function calculate(){
+
+let a=
+Number(
+document.getElementById("num1").value
+);
+
+let b=
+Number(
+document.getElementById("num2").value
+);
+
+document.getElementById("result")
+.innerText=a+b;
+
+}
+<\/script>
+
+</body>
+</html>
+`
+},
 
         {
-            id:2,
-            name:"To-Do List",
-            desc:"Task manager for daily tasks",
-            category:"JavaScript",
-            author:"Marta",
-            likes:8
-        },
+    id:2,
+    name:"To-Do List",
+    desc:"Task manager for daily tasks",
+    category:"JavaScript",
+    author:"Marta",
+    likes:8,
+
+    code: `
+<!DOCTYPE html>
+<html>
+<body>
+
+<input id="task">
+
+<button onclick="addTask()">
+Add
+</button>
+
+<ul id="list"></ul>
+
+<script>
+
+function addTask(){
+
+let task=
+document.getElementById("task").value;
+
+let li=
+document.createElement("li");
+
+li.innerText=task;
+
+document
+.getElementById("list")
+.appendChild(li);
+
+}
+
+<\/script>
+
+</body>
+</html>
+`
+},
+
+       {
+    id:3,
+    name:"Notes App",
+    desc:"Mini app for creating notes",
+    category:"JavaScript",
+    author:"Marta",
+    likes:5,
+
+    code: `
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Notes App</h2>
+
+<textarea id="note"></textarea>
+
+<br><br>
+
+<button onclick="saveNote()">
+Save
+</button>
+
+<p id="result"></p>
+
+<script>
+
+function saveNote(){
+
+let text=
+document.getElementById("note").value;
+
+document
+.getElementById("result")
+.innerText=text;
+
+}
+
+<\/script>
+
+</body>
+</html>
+`
+},
 
         {
-            id:3,
-            name:"Notes App",
-            desc:"Mini app for creating notes",
-            category:"JavaScript",
-            author:"Marta",
-            likes:5
-        },
+    id:4,
+    name:"Weather Card",
+    desc:"Modern weather interface",
+    category:"HTML/CSS",
+    author:"Marta",
+    likes:6,
 
-        {
-            id:4,
-            name:"Weather Card",
-            desc:"Modern weather interface",
-            category:"HTML/CSS",
-            author:"Marta",
-            likes:6
-        }
+    code: `
+<!DOCTYPE html>
+<html>
+<head>
+
+<style>
+
+body{
+
+font-family:Arial;
+background:#0d1117;
+color:white;
+text-align:center;
+padding:50px;
+
+}
+
+.card{
+
+background:#161b22;
+padding:20px;
+border-radius:15px;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="card">
+
+<h1>Ivano-Frankivsk</h1>
+
+<h2>18°C</h2>
+
+<p>Cloudy</p>
+
+</div>
+
+</body>
+</html>
+`
+}
 
     ];
 
