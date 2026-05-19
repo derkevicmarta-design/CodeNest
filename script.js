@@ -1,3 +1,10 @@
+let savedVersion = localStorage.getItem("projectsVersion");
+
+if (savedVersion !== "2") {
+    localStorage.removeItem("projects");
+    localStorage.setItem("projectsVersion", "2");
+}
+
 let projects = JSON.parse(localStorage.getItem("projects")) || [];
 let currentUser = localStorage.getItem("currentUser") || "Marta";
 
@@ -11,7 +18,7 @@ let authMode = "login";
 /* DEFAULT REPOSITORIES */
 
 function addDefaultProjects() {
-    if (projects.length > 0) return;
+    if (projects.length > 0 && projects[0].html) return;
 
     projects = [
         {
