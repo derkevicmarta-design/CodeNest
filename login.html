@@ -115,5 +115,21 @@
 
 <script src="auth.js"></script>
 
+
+<script>
+let users = JSON.parse(localStorage.getItem("users")) || [];
+
+let martaExists = users.some(user => user.username === "Marta");
+
+if (!martaExists) {
+    users.push({
+        username: "Marta",
+        password: "12345"
+    });
+
+    localStorage.setItem("users", JSON.stringify(users));
+}
+</script>
+
 </body>
 </html>
