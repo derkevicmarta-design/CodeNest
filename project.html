@@ -12,8 +12,8 @@
     <div class="terminal-header">
         <span>CodeNest Terminal</span>
         <div>
-            <button onclick="saveProject()">Save</button>
-            <button onclick="goBack()">Exit</button>
+            <button id="saveBtn">Save</button>
+            <button id="exitBtn">Exit</button>
         </div>
     </div>
 
@@ -23,9 +23,9 @@
     </div>
 
     <div class="editor-tabs">
-        <button class="file-tab active" onclick="switchFile('html', this)">HTML</button>
-        <button class="file-tab" onclick="switchFile('css', this)">CSS</button>
-        <button class="file-tab" onclick="switchFile('js', this)">JS</button>
+        <button class="file-tab active" data-file="html">HTML</button>
+        <button class="file-tab" data-file="css">CSS</button>
+        <button class="file-tab" data-file="js">JS</button>
     </div>
 
     <div class="editor">
@@ -34,7 +34,7 @@
         <textarea id="js" class="code" style="display:none"></textarea>
     </div>
 
-    <button class="run-btn" onclick="runCode()">Run Code</button>
+    <button class="run-btn" id="runBtn">Run Code</button>
 
     <iframe id="preview"></iframe>
 
@@ -60,40 +60,40 @@ if (!project) {
     el("js").value = project.js || "";
 }
 
-function switchFile(file, btn) {
-    document.querySelectorAll(".code").forEach(area => {
-        area.style.display = "none";
+document.querySelectorAll(".file-tab").forEach(button => {
+    button.addEventListener("click", function () {
+        let file = this.dataset.file;
+
+        document.querySelectorAll(".code").forEach(area => {
+            area.style.display = "none";
+        });
+
+        el(file).style.display = "block";
+
+        document.querySelectorAll(".file-tab").forEach(tab => {
+            tab.classList.remove("active");
+        });
+
+        this.classList.add("active");
     });
+});
 
-    el(file).style.display = "block";
-
-    document.querySelectorAll(".file-tab").forEach(tab => {
-        tab.classList.remove("active");
-    });
-
-    btn.classList.add("active");
-}
-
-function runCode() {
+el("runBtn").addEventListener("click", function () {
     let html = el("html").value;
     let css = el("css").value;
     let js = el("js").value;
 
-    el("preview").srcdoc = `
-        <!DOCTYPE html>
-        <html>
-        <head>
-            <style>${css}</style>
-        </head>
-        <body>
-            ${html}
-            <script>${js}<\/script>
-        </body>
-        </html>
-    `;
-}
+    el("preview").srcdoc =
+        "<html><head><style>" +
+        css +
+        "</style></head><body>" +
+        html +
+        "<script>" +
+        js +
+        "<\/script></body></html>";
+});
 
-function saveProject() {
+el("saveBtn").addEventListener("click", function () {
     projects[index].html = el("html").value;
     projects[index].css = el("css").value;
     projects[index].js = el("js").value;
@@ -101,13 +101,11 @@ function saveProject() {
     localStorage.setItem("projects", JSON.stringify(projects));
 
     alert("Saved");
-}
+});
 
-function goBack() {
+el("exitBtn").addEventListener("click", function () {
     window.location.href = "index.html";
-}
-
-runCode();
+});
 </script>
 
 </body>
