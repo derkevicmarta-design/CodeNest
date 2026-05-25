@@ -41,87 +41,97 @@
 </div>
 
 <script>
-let index = localStorage.getItem("openProject");
-let projects = JSON.parse(localStorage.getItem("projects")) || [];
-let project = projects[index];
 
-const defaultHtml = `<h1>Calculator</h1>
+let htmlArea = document.getElementById("html");
+let cssArea = document.getElementById("css");
+let jsArea = document.getElementById("js");
+
+const defaultHTML = `
+<h1>Calculator</h1>
+
 <input id="a" placeholder="First number">
 <input id="b" placeholder="Second number">
+
 <button onclick="sum()">+</button>
-<h2 id="result"></h2>`;
 
-const defaultCss = `body {
-    font-family: Arial;
-    text-align: center;
-    padding: 40px;
+<h2 id="result"></h2>
+`;
+
+const defaultCSS = `
+body{
+font-family:Arial;
+text-align:center;
+padding:30px;
 }
+`;
 
-input {
-    padding: 10px;
-    margin: 5px;
+const defaultJS = `
+function sum(){
+
+let a=Number(document.getElementById("a").value);
+let b=Number(document.getElementById("b").value);
+
+document.getElementById("result").innerText=a+b;
+
 }
+`;
 
-button {
-    padding: 10px 15px;
-}`;
+htmlArea.value = defaultHTML;
+cssArea.value = defaultCSS;
+jsArea.value = defaultJS;
 
-const defaultJs = `function sum() {
-    let a = Number(document.getElementById("a").value);
-    let b = Number(document.getElementById("b").value);
-    document.getElementById("result").innerText = a + b;
-}`;
+document.querySelectorAll(".file-tab")
+.forEach(btn=>{
 
-document.getElementById("html").value = project?.html || defaultHtml;
-document.getElementById("css").value = project?.css || defaultCss;
-document.getElementById("js").value = project?.js || defaultJs;
+btn.addEventListener("click",()=>{
 
-if (project) {
-    document.getElementById("title").innerText = project.name;
-    document.getElementById("desc").innerText = project.desc;
-}
+document.querySelectorAll(".code")
+.forEach(x=>x.style.display="none");
 
-document.querySelectorAll(".file-tab").forEach(btn => {
-    btn.addEventListener("click", function () {
-        document.querySelectorAll(".code").forEach(area => {
-            area.style.display = "none";
-        });
+document.getElementById(
+btn.dataset.file
+).style.display="block";
 
-        document.getElementById(this.dataset.file).style.display = "block";
-
-        document.querySelectorAll(".file-tab").forEach(tab => {
-            tab.classList.remove("active");
-        });
-
-        this.classList.add("active");
-    });
 });
 
-document.getElementById("runBtn").addEventListener("click", function () {
-    let html = document.getElementById("html").value;
-    let css = document.getElementById("css").value;
-    let js = document.getElementById("js").value;
-
-    document.getElementById("preview").srcdoc =
-        "<!DOCTYPE html><html><head><style>" +
-        css +
-        "</style></head><body>" +
-        html +
-        "<script>" +
-        js +
-        "<\/script></body></html>";
 });
 
-document.getElementById("saveBtn").addEventListener("click", function () {
-    if (project) {
-        projects[index].html = document.getElementById("html").value;
-        projects[index].css = document.getElementById("css").value;
-        projects[index].js = document.getElementById("js").value;
-        localStorage.setItem("projects", JSON.stringify(projects));
-    }
+document.getElementById("runBtn")
+.addEventListener("click",()=>{
 
-    alert("Saved");
+document.getElementById(
+"preview"
+).srcdoc =
+
+`
+<html>
+<head>
+
+<style>
+
+${cssArea.value}
+
+</style>
+
+</head>
+
+<body>
+
+${htmlArea.value}
+
+<script>
+
+${jsArea.value}
+
+<\/script>
+
+</body>
+
+</html>
+`;
+
 });
+
 </script>
 
 </body>
