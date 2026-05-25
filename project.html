@@ -22,17 +22,23 @@
         <p id="desc"></p>
     </div>
 
-<div class="editor-tabs">
-    ...
-</div>
+    <div class="editor-tabs">
+        <button class="file-tab active" onclick="switchFile('html', this)">HTML</button>
+        <button class="file-tab" onclick="switchFile('css', this)">CSS</button>
+        <button class="file-tab" onclick="switchFile('js', this)">JS</button>
+    </div>
 
-<div class="editor">
-    ...
-</div>
+    <div class="editor">
+        <textarea id="html" class="code" placeholder="HTML..."></textarea>
+        <textarea id="css" class="code" style="display:none" placeholder="CSS..."></textarea>
+        <textarea id="js" class="code" style="display:none" placeholder="JavaScript..."></textarea>
+    </div>
 
-<button class="run-btn" onclick="updatePreview()">
-    Run Code
-</button>
+    <button class="run-btn" onclick="updatePreview()">Run Code</button>
+
+    <iframe id="preview"></iframe>
+
+</div>
 
 <script src="js/project.js"></script>
 
