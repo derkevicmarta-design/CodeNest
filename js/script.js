@@ -4,6 +4,7 @@ let currentUser = localStorage.getItem("currentUser") || "Marta";
 localStorage.setItem("currentUser", currentUser);
 
 let defaultProjects = [
+
 {
 name:"Weather App",
 
@@ -80,17 +81,22 @@ document.getElementById(
 
 }
 `
-}
+},
 
-    {
-    name: "Calculator Pro",
-    desc: "Calculator with operations",
-    author: "Marta",
-    category: "JavaScript",
-    likes: 15,
-    fav: false,
+{
+name:"Calculator Pro",
 
-    html: `
+desc:"Calculator with operations",
+
+author:"Marta",
+
+category:"JavaScript",
+
+likes:15,
+
+fav:false,
+
+html:`
 <h1>Calculator</h1>
 
 <input id="a" placeholder="First number">
@@ -107,7 +113,7 @@ document.getElementById(
 <h2 id="result"></h2>
 `,
 
-    css: `
+css:`
 body{
 font-family:Arial;
 padding:30px;
@@ -132,40 +138,84 @@ color:white;
 }
 `,
 
-    js: `
+js:`
 function sum(){
-let a=Number(document.getElementById("a").value);
-let b=Number(document.getElementById("b").value);
-document.getElementById("result").innerText=a+b;
+
+let a=Number(
+document.getElementById("a").value
+);
+
+let b=Number(
+document.getElementById("b").value
+);
+
+document.getElementById(
+"result"
+).innerText=a+b;
+
 }
 
 function minus(){
-let a=Number(document.getElementById("a").value);
-let b=Number(document.getElementById("b").value);
-document.getElementById("result").innerText=a-b;
+
+let a=Number(
+document.getElementById("a").value
+);
+
+let b=Number(
+document.getElementById("b").value
+);
+
+document.getElementById(
+"result"
+).innerText=a-b;
+
 }
 
 function multiply(){
-let a=Number(document.getElementById("a").value);
-let b=Number(document.getElementById("b").value);
-document.getElementById("result").innerText=a*b;
+
+let a=Number(
+document.getElementById("a").value
+);
+
+let b=Number(
+document.getElementById("b").value
+);
+
+document.getElementById(
+"result"
+).innerText=a*b;
+
 }
 
 function divide(){
-let a=Number(document.getElementById("a").value);
-let b=Number(document.getElementById("b").value);
+
+let a=Number(
+document.getElementById("a").value
+);
+
+let b=Number(
+document.getElementById("b").value
+);
 
 if(b===0){
-document.getElementById("result").innerText="Error";
+
+document.getElementById(
+"result"
+).innerText="Error";
+
 return;
+
 }
 
-document.getElementById("result").innerText=a/b;
+document.getElementById(
+"result"
+).innerText=a/b;
+
 }
 `
 }
-];
 
+];
 if (localStorage.getItem("projectsVersion") !== DEFAULT_VERSION) {
     localStorage.setItem("projects", JSON.stringify(defaultProjects));
     localStorage.setItem("projectsVersion", DEFAULT_VERSION);
