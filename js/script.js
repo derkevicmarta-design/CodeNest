@@ -359,9 +359,13 @@ function updateStats() {
     if (activeUser) activeUser.innerText = currentUser;
 }
 
-window.onload = function () {
+document.addEventListener("DOMContentLoaded", () => {
+
     loadHeaderProfile();
+
     renderProjects();
+
+});
 
     let search = document.getElementById("search");
 
@@ -371,4 +375,4 @@ window.onload = function () {
             renderProjects();
         });
     }
-};
+} 
