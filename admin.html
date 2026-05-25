@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin • CodeNest</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="header">
+    <div class="left">
+        <h2>CodeNest Admin</h2>
+    </div>
+
+    <div class="right">
+        <a href="index.html"><button>All projects</button></a>
+        <a href="profile.html"><button>Profile</button></a>
+        <a href="contacts.html"><button>Contacts</button></a>
+        <button onclick="logout()">Logout</button>
+    </div>
+</header>
+
+<section class="admin-page">
+    <div class="admin-card">
+        <h1>Admin panel</h1>
+        <p>Тут відображаються заявки з контактної форми.</p>
+
+        <div id="requestsList"></div>
+    </div>
+</section>
+
+<script>
+function renderRequests() {
+    let list = document.getElementById("requestsList");
+    let requests = JSON.parse(localStorage.getItem("contactRequests")) || [];
+
+    list.innerHTML = "";
+
+    if (requests.length === 0) {
+        list.innerHTML = '<div class="empty-box">Заявок поки немає</div>';
+        return;
+    }
+
+    requests.forEach((request, index) => {
+        list.innerHTML += `
+            <div class="request-card">
+                <h3>${request.name}</h3>
+                <p><b>Email:</b> ${request.email}</p>
+                <p>${request.message}</p>
+                <small>${request.date}</small>
+
+                <button onclick="deleteRequest(${index})">
+                    Delete request
+                </button>
+            </div>
+        `;
+    });
+}
+
+function deleteRequest(index) {
+    let requests = JSON.parse(localStorage.getItem("contactRequests")) || [];
+
+    requests.splice(index, 1);
+
+    localStorage.setItem("contactRequests", JSON.stringify(requests));
+
+    renderRequests();
+}
+
+function logout() {
+    localStorage.removeItem("currentUser");
+    window.location.href = "login.html";
+}
+
+renderRequests();
+</script>
+
+</body>
+</html>

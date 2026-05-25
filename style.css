@@ -3114,3 +3114,60 @@ iframe {
 .register-btn:hover {
     background: #2ea043 !important;
 }
+
+/* CONTACTS + ADMIN */
+
+.contact-page,
+.admin-page{
+display:flex;
+justify-content:center;
+padding:40px;
+}
+
+.contact-card,
+.admin-card{
+width:800px;
+background:#161b22;
+border:1px solid #30363d;
+border-radius:15px;
+padding:30px;
+}
+
+.contact-card h1,
+.admin-card h1{
+margin-bottom:10px;
+}
+
+.contact-card input,
+.contact-card textarea{
+width:100%;
+margin-top:15px;
+padding:12px;
+background:#0d1117;
+border:1px solid #30363d;
+border-radius:8px;
+color:white;
+box-sizing:border-box;
+}
+
+.contact-card textarea{
+height:150px;
+resize:none;
+}
+
+.contact-card button{
+margin-top:15px;
+}
+
+.request-card{
+background:#0d1117;
+border:1px solid #30363d;
+padding:20px;
+border-radius:12px;
+margin-top:15px;
+}
+
+.request-card button{
+margin-top:10px;
+background:#da3633;
+}
