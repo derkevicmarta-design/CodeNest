@@ -21,13 +21,14 @@ body {
 
 textarea {
     width: 100%;
-    height: 250px;
-    background: black;
+    height: 280px;
+    background: #010409;
     color: #39d353;
-    padding: 10px;
+    padding: 14px;
     font-family: Consolas, monospace;
-    border: none;
+    border: 1px solid #30363d;
     border-radius: 10px;
+    resize: vertical;
 }
 
 .terminal-buttons {
@@ -69,20 +70,9 @@ iframe {
 <div class="terminal">
     <h2>CodeNest Terminal</h2>
 
-    <textarea id="html">
-<h1>Calculator</h1>
+    <textarea id="html"><h1>Calculator</h1>
 
 <input id="a" placeholder="First number">
-<input id="b" placeholder="Second number">
-
-<button onclick="showResult()">+</button>
-
-<h2 id="result"></h2>
-
-<h1>Calculator</h1>
-
-<input id="a" placeholder="First number">
-
 <input id="b" placeholder="Second number">
 
 <button onclick="showResult()">+</button>
@@ -90,118 +80,79 @@ iframe {
 <h2 id="result"></h2>
 
 <style>
-
-body{
-background:#0d1117;
-color:#e6edf3;
-font-family:Arial;
-padding:40px;
-text-align:center;
+body {
+    background: #0d1117;
+    color: #e6edf3;
+    font-family: Arial;
+    padding: 40px;
+    text-align: center;
 }
 
-h1{
-color:#39d353;
-margin-bottom:30px;
+h1 {
+    color: #39d353;
+    margin-bottom: 30px;
 }
 
-input{
-
-background:#161b22;
-border:1px solid #30363d;
-
-padding:12px;
-margin:8px;
-
-border-radius:10px;
-
-color:white;
-
-width:180px;
-
+input {
+    background: #161b22;
+    border: 1px solid #30363d;
+    padding: 12px;
+    margin: 8px;
+    border-radius: 10px;
+    color: white;
+    width: 180px;
 }
 
-button{
-
-background:#238636;
-border:none;
-
-padding:12px 18px;
-
-border-radius:10px;
-
-color:white;
-
-font-weight:bold;
-
-cursor:pointer;
-
+button {
+    background: #238636;
+    border: none;
+    padding: 12px 18px;
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
 }
 
-button:hover{
-
-background:#2ea043;
-
+button:hover {
+    background: #2ea043;
 }
 
-#result{
-
-margin-top:30px;
-
-font-size:28px;
-color:#58a6ff;
-
+#result {
+    margin-top: 30px;
+    font-size: 28px;
+    color: #58a6ff;
 }
-
 </style>
 
 &lt;script&gt;
+function showResult() {
+    let a = Number(document.getElementById("a").value);
+    let b = Number(document.getElementById("b").value);
 
-function showResult(){
-
-let a=
-Number(
-document.getElementById("a").value
-);
-
-let b=
-Number(
-document.getElementById("b").value
-);
-
-document.getElementById(
-"result"
-).innerText=
-a+b;
-
+    document.getElementById("result").innerText = a + b;
 }
+&lt;/script&gt;</textarea>
 
-&lt;/script&gt;
+    <div class="terminal-buttons">
+        <button id="runBtn" type="button">▶ Run</button>
+        <button id="stopBtn" type="button">■ Stop</button>
 
-<div class="terminal-buttons">
-    <button id="runBtn" type="button">▶ Run</button>
-    <button id="stopBtn" type="button">■ Stop</button>
+        <a href="index.html">
+            <button type="button">Exit</button>
+        </a>
+    </div>
 
-    <a href="index.html">
-        <button type="button">Exit</button>
-    </a>
+    <iframe id="preview"></iframe>
 </div>
 
-<iframe id="preview"></iframe>
-
 <script>
 document.getElementById("runBtn").addEventListener("click", function () {
     let code = document.getElementById("html").value;
-    document.getElementById("preview").srcdoc = code;
-});
 
-document.getElementById("stopBtn").addEventListener("click", function () {
-    document.getElementById("preview").srcdoc = "";
-});
-</script>
+    code = code
+        .replaceAll("&lt;", "<")
+        .replaceAll("&gt;", ">");
 
-<script>
-document.getElementById("runBtn").addEventListener("click", function () {
-    let code = document.getElementById("html").value;
     document.getElementById("preview").srcdoc = code;
 });
 
