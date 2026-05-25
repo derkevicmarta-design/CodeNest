@@ -5,73 +5,87 @@ localStorage.setItem("currentUser", currentUser);
 
 let defaultProjects = [
     {
-        name: "Calculator",
-        desc: "Simple calculator",
-        author: "Marta",
-        category: "JavaScript",
-        likes: 12,
-        fav: false,
-        html: `<h1>Calculator</h1>
+    name: "Calculator Pro",
+    desc: "Calculator with operations",
+    author: "Marta",
+    category: "JavaScript",
+    likes: 15,
+    fav: false,
+
+    html: `
+<h1>Calculator</h1>
+
 <input id="a" placeholder="First number">
+
 <input id="b" placeholder="Second number">
+
+<br><br>
+
 <button onclick="sum()">+</button>
-<h2 id="result"></h2>`,
-        css: `body{font-family:Arial;text-align:center;padding:40px;background:#0d1117;color:white;}
-input{padding:10px;margin:5px;border-radius:8px;}
-button{padding:10px 15px;background:#238636;color:white;border:none;border-radius:8px;}`,
-        js: `function sum(){
+<button onclick="minus()">-</button>
+<button onclick="multiply()">×</button>
+<button onclick="divide()">÷</button>
+
+<h2 id="result"></h2>
+`,
+
+    css: `
+body{
+font-family:Arial;
+padding:30px;
+text-align:center;
+background:#0d1117;
+color:white;
+}
+
+input{
+padding:10px;
+margin:5px;
+border-radius:8px;
+}
+
+button{
+padding:10px;
+margin:5px;
+border:none;
+border-radius:8px;
+background:#238636;
+color:white;
+}
+`,
+
+    js: `
+function sum(){
 let a=Number(document.getElementById("a").value);
 let b=Number(document.getElementById("b").value);
 document.getElementById("result").innerText=a+b;
-}`
-    },
-    {
-        name: "To-Do List",
-        desc: "Task manager",
-        author: "Marta",
-        category: "JavaScript",
-        likes: 8,
-        fav: false,
-        html: `<h1>To-Do List</h1>
-<input id="task" placeholder="New task">
-<button onclick="addTask()">Add</button>
-<ul id="list"></ul>`,
-        css: `body{font-family:Arial;padding:40px;background:#0d1117;color:white;}
-li{background:#161b22;padding:10px;margin:8px;border-radius:8px;}`,
-        js: `function addTask(){
-let task=document.getElementById("task").value;
-if(!task)return;
-let li=document.createElement("li");
-li.innerText=task;
-document.getElementById("list").appendChild(li);
-document.getElementById("task").value="";
-}`
-    },
-    {
-        name: "Notes App",
-        desc: "Mini app for notes",
-        author: "Marta",
-        category: "JavaScript",
-        likes: 5,
-        fav: false,
-        html: `<h1>Notes App</h1>
-<textarea id="note"></textarea>
-<br>
-<button onclick="addNote()">Add note</button>
-<div id="notes"></div>`,
-        css: `body{font-family:Arial;padding:40px;background:#0d1117;color:white;}
-textarea{width:300px;height:100px;background:#161b22;color:white;border-radius:10px;padding:10px;}
-.note{background:#161b22;margin-top:10px;padding:10px;border-radius:8px;}`,
-        js: `function addNote(){
-let text=document.getElementById("note").value;
-if(!text)return;
-let div=document.createElement("div");
-div.className="note";
-div.innerText=text;
-document.getElementById("notes").appendChild(div);
-document.getElementById("note").value="";
-}`
-    }
+}
+
+function minus(){
+let a=Number(document.getElementById("a").value);
+let b=Number(document.getElementById("b").value);
+document.getElementById("result").innerText=a-b;
+}
+
+function multiply(){
+let a=Number(document.getElementById("a").value);
+let b=Number(document.getElementById("b").value);
+document.getElementById("result").innerText=a*b;
+}
+
+function divide(){
+let a=Number(document.getElementById("a").value);
+let b=Number(document.getElementById("b").value);
+
+if(b===0){
+document.getElementById("result").innerText="Error";
+return;
+}
+
+document.getElementById("result").innerText=a/b;
+}
+`
+}
 ];
 
 if (localStorage.getItem("projectsVersion") !== DEFAULT_VERSION) {
