@@ -11,11 +11,13 @@
 
     <div class="terminal-header">
         <span>CodeNest Terminal</span>
+
         <div>
-            <button id="saveBtn">Save</button>
+            <button id="saveBtn" type="button">Save</button>
+
             <a href="index.html">
-    <button type="button">Exit</button>
-</a>
+                <button type="button">Exit</button>
+            </a>
         </div>
     </div>
 
@@ -36,7 +38,9 @@
         <textarea id="js" class="code" style="display:none"></textarea>
     </div>
 
-    <button class="run-btn" id="runBtn">Run Code</button>
+    <button class="run-btn" id="runBtn" type="button">
+        Run Code
+    </button>
 
     <iframe id="preview"></iframe>
 
@@ -80,22 +84,30 @@ document.querySelectorAll(".file-tab").forEach(button => {
     });
 });
 
-el("runBtn").addEventListener("click", function () {
+document.getElementById("runBtn").addEventListener("click", function () {
     let html = el("html").value;
     let css = el("css").value;
     let js = el("js").value;
 
-    el("preview").srcdoc =
-        "<html><head><style>" +
-        css +
-        "</style></head><body>" +
-        html +
-        "<script>" +
-        js +
-        "<\/script></body></html>";
+    let fullCode = `
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <style>${css}</style>
+        </head>
+        <body>
+            ${html}
+            <script>
+                ${js}
+            <\/script>
+        </body>
+        </html>
+    `;
+
+    el("preview").srcdoc = fullCode;
 });
 
-el("saveBtn").addEventListener("click", function () {
+document.getElementById("saveBtn").addEventListener("click", function () {
     projects[index].html = el("html").value;
     projects[index].css = el("css").value;
     projects[index].js = el("js").value;
@@ -103,10 +115,6 @@ el("saveBtn").addEventListener("click", function () {
     localStorage.setItem("projects", JSON.stringify(projects));
 
     alert("Saved");
-});
-
-el("exitBtn").addEventListener("click", function () {
-    window.location.href = "index.html";
 });
 </script>
 
