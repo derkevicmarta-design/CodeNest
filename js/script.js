@@ -1,392 +1,255 @@
-let currentUser = localStorage.getItem("currentUser");
-
-let index = localStorage.getItem("openProject");
-let projects = JSON.parse(localStorage.getItem("projects")) || [];
-
-let p = projects[index];
-
-if (!p) {
-    document.body.innerHTML =
-    "<h1>Проєкт не знайдено</h1>";
-
-    throw new Error("Project not found");
-}
-
-
-/* SAFE GET */
-
-function el(id){
-
-return document.getElementById(id);
-
-}
-
-
-/* LOAD DATA */
-
-if(el("title"))
-el("title").innerText=p.name;
-
-if(el("desc"))
-el("desc").innerText=p.desc;
-
-if(el("author"))
-el("author").innerText=p.author;
-
-if(el("date"))
-el("date").innerText=p.date;
-
-if(el("category"))
-el("category").innerText=
-p.category||"—";
-
-
-/* LOAD CODE */
-
-if(el("html"))
-el("html").value=
-p.html||"";
-
-if(el("css"))
-el("css").value=
-p.css||"";
-
-if(el("js"))
-el("js").value=
-p.js||"";
-
-if(el("readme"))
-el("readme").value=
-p.readme||"";
-
-
-/* SAVE */
-
-function autoSave(){
-
-let projects=
+let projects =
 JSON.parse(
 localStorage.getItem("projects")
-)||[];
-
-
-if(!projects[index]) return;
-
-
-projects[index].html=
-el("html")?.value||"";
-
-projects[index].css=
-el("css")?.value||"";
-
-projects[index].js=
-el("js")?.value||"";
-
-projects[index].readme=
-el("readme")?.value||"";
-
-
-localStorage.setItem(
-"projects",
-JSON.stringify(projects)
-);
-
-}
-
-
-/* EDITOR */
-
-function bindEditors(){
-
-["html","css","js"]
-
-.forEach(id=>{
-
-if(el(id)){
-
-el(id)
-
-.addEventListener(
-"input",
-
-()=>{
-
-autoSave();
-
-updatePreview();
-
-}
-
-);
-
-}
-
-});
-
-}
-
-bindEditors();
-
-
-/* PREVIEW */
-
-function updatePreview(){
-
-let html=
-el("html")?.value||"";
-
-let css=
-el("css")?.value||"";
-
-let js=
-el("js")?.value||"";
-
-
-let iframe=
-el("preview");
-
-if(!iframe) return;
-
-
-iframe.srcdoc=`
-
-<html>
-
-<head>
-
-<style>
-
-${css}
-
-</style>
-
-</head>
-
-<body>
-
-${html}
-
-<script>
-
-${js}
-
-<\/script>
-
-</body>
-
-</html>
-
-`;
-
-}
-
-updatePreview();
-
-
-/* SAVE BUTTON */
-
-function saveProject(){
-
-autoSave();
-
-alert("Saved!");
-
-}
-
-
-/* EXIT */
-
-function goBack(){
-
-window.location.href=
-"index.html";
-
-}
-
-
-/* COMMENTS */
-
-function addComment(){
-
-let text=
-el("commentText")?.value;
-
-if(!text) return;
-
-
-if(!p.comments)
-p.comments=[];
-
-
-p.comments.push({
-
-user:
-currentUser||
-"Guest",
-
-text:text,
-
-date:
-new Date()
-.toLocaleDateString()
-
-});
-
-
-localStorage.setItem(
-"projects",
-JSON.stringify(projects)
-);
-
-
-el("commentText").value="";
-
-
-renderComments();
-
-}
-
-
-function renderComments(){
-
-let list=
-el("commentsList");
-
-if(!list) return;
-
-
-list.innerHTML="";
-
-
-let comments=
-p.comments||[];
-
-
-[...comments]
-
-.reverse()
-
-.forEach(c=>{
-
-let div=
-document.createElement(
-"div"
-);
-
-
-div.className=
-"project";
-
-
-div.innerHTML=`
-
-<h4>
-
-${c.user}
-
-</h4>
-
-<p>
-
-${c.text}
-
-</p>
-
-<small>
-
-${c.date}
-
-</small>
-
-`;
-
-
-list.appendChild(div);
-
-});
-
-}
-
-renderComments();
-
-
-/* FILE SWITCH */
-
-function switchFile(file){
-
-document
-
-.querySelectorAll(".code")
-
-.forEach(item=>{
-
-item.style.display=
-"none";
-
-});
-
-
-let active=
-document.getElementById(file);
-
-if(active){
-
-active.style.display=
-"block";
-
-}
-
-
-document
-
-.querySelectorAll(
-".file-tab"
-)
-
-.forEach(btn=>{
-
-btn.classList.remove(
-"active"
-);
-
-});
-
-
-event.target.classList.add(
-"active"
-);
-
-}
-
-switchFile("html");
-
-function updateStats(){
-
-let totalProjects = projects.length;
-
-let totalLikes = 0;
-
-projects.forEach(p => {
-totalLikes += p.likes || 0;
-});
-
-let users =
-JSON.parse(
-localStorage.getItem("users")
 ) || [];
 
-let totalUsers = users.length || 1;
+let currentUser =
+localStorage.getItem("currentUser")
+|| "Marta";
 
-if(document.getElementById("totalProjects")){
-document.getElementById("totalProjects").innerText = totalProjects;
+
+if(projects.length===0){
+
+projects=[
+
+{
+name:"Calculator",
+desc:"Simple calculator",
+author:"Marta",
+category:"JavaScript",
+likes:12,
+fav:false,
+html:"",
+css:"",
+js:""
+},
+
+{
+name:"To-Do List",
+desc:"Task manager",
+author:"Marta",
+category:"JavaScript",
+likes:8,
+fav:false,
+html:"",
+css:"",
+js:""
+},
+
+{
+name:"Notes App",
+desc:"Notes application",
+author:"Marta",
+category:"JavaScript",
+likes:5,
+fav:false,
+html:"",
+css:"",
+js:""
 }
 
-if(document.getElementById("totalLikes")){
-document.getElementById("totalLikes").innerText = totalLikes;
-}
+];
 
-if(document.getElementById("totalUsers")){
-document.getElementById("totalUsers").innerText = totalUsers;
-}
+save();
 
 }
+
+
+function save(){
+
+localStorage.setItem(
+"projects",
+JSON.stringify(projects)
+);
+
+}
+
+
+function renderProjects(){
+
+let container=
+document.getElementById(
+"projects"
+);
+
+if(!container) return;
+
+container.innerHTML="";
+
+projects.forEach((p,index)=>{
+
+container.innerHTML +=`
+
+<div class="project">
+
+<h3>
+${p.name}
+</h3>
+
+<p>
+${p.desc}
+</p>
+
+<p>
+${p.category}
+</p>
+
+<button
+onclick=
+"openModal(${index})"
+>
+
+Open
+
+</button>
+
+<button
+onclick=
+"likeProject(${index})"
+>
+
+❤️ ${p.likes||0}
+
+</button>
+
+</div>
+
+`;
+
+});
+
+}
+
+
+function addProject(){
+
+let name=
+document.getElementById(
+"name"
+)?.value;
+
+let desc=
+document.getElementById(
+"desc"
+)?.value;
+
+let category=
+document.getElementById(
+"category"
+)?.value;
+
+let code=
+document.getElementById(
+"code"
+)?.value;
+
+
+if(!name||!desc){
+
+alert(
+"Fill all fields"
+);
+
+return;
+
+}
+
+
+projects.push({
+
+name:name,
+desc:desc,
+category:category,
+author:currentUser,
+likes:0,
+
+html:code,
+css:"",
+js:""
+
+});
+
+
+save();
+
+renderProjects();
+
+}
+
+
+function openModal(index){
+
+localStorage.setItem(
+"openProject",
+index
+);
+
+window.location.href=
+"project.html";
+
+}
+
+
+function likeProject(index){
+
+projects[index].likes++;
+
+save();
+
+renderProjects();
+
+}
+
+
+function clearSearch(){
+
+let search=
+document.getElementById(
+"search"
+);
+
+if(!search) return;
+
+search.value="";
+
+renderProjects();
+
+}
+
+
+function logout(){
+
+localStorage.removeItem(
+"currentUser"
+);
+
+window.location.href=
+"login.html";
+
+}
+
+
+function loadHeaderProfile(){
+
+let username=
+document.getElementById(
+"menuUsername"
+);
+
+if(username){
+
+username.innerText=
+currentUser;
+
+}
+
+}
+
+
+window.onload=function(){
+
+loadHeaderProfile();
+
+renderProjects();
+
+};

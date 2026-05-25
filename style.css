@@ -3242,3 +3242,54 @@ margin-bottom:10px;
 color:#8b949e;
 
 }
+
+/* LOADING */
+
+.loading-box{
+
+padding:30px;
+
+text-align:center;
+
+background:#161b22;
+
+border:1px solid #30363d;
+
+border-radius:15px;
+
+margin-top:20px;
+
+}
+
+.loading-spinner{
+
+width:35px;
+height:35px;
+
+border:4px solid #30363d;
+
+border-top:4px solid #58a6ff;
+
+border-radius:50%;
+
+margin:auto;
+
+animation:spin 1s linear infinite;
+
+}
+
+@keyframes spin{
+
+0%{
+
+transform:rotate(0deg);
+
+}
+
+100%{
+
+transform:rotate(360deg);
+
+}
+
+}
