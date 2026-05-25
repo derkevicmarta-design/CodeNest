@@ -65,8 +65,16 @@ function sendContactRequest() {
     document.getElementById("contactEmail").value = "";
     document.getElementById("contactMessage").value = "";
 
+
+    status.innerText = "Loading...";
+status.style.color = "#58a6ff";
+
+setTimeout(() => {
+
     status.innerText = "Запит успішно збережено";
     status.style.color = "#39d353";
+
+}, 1000);
 }
 
 function logout() {
