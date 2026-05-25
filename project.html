@@ -5,160 +5,331 @@
 <title>CodeNest Terminal</title>
 
 <style>
-body {
-    background: #0d1117;
-    color: white;
-    font-family: Arial;
-    margin: 0;
-    padding: 20px;
+
+body{
+background:#0d1117;
+color:white;
+font-family:Arial;
+margin:0;
+padding:30px;
 }
 
-.terminal {
-    background: #161b22;
-    padding: 20px;
-    border-radius: 15px;
+.terminal{
+
+background:#161b22;
+padding:20px;
+border-radius:15px;
+
 }
 
-textarea {
-    width: 100%;
-    height: 280px;
-    background: #010409;
-    color: #39d353;
-    padding: 14px;
-    font-family: Consolas, monospace;
-    border: 1px solid #30363d;
-    border-radius: 10px;
-    resize: vertical;
+h2{
+
+color:#58a6ff;
+
 }
 
-.terminal-buttons {
-    margin-top: 15px;
+textarea{
+
+width:100%;
+height:300px;
+
+background:#010409;
+color:#39d353;
+
+padding:15px;
+
+font-family:Consolas, monospace;
+
+border:1px solid #30363d;
+border-radius:10px;
+
+resize:none;
+
 }
 
-button {
-    padding: 10px 18px;
-    margin-right: 10px;
-    border: none;
-    border-radius: 10px;
-    background: #238636;
-    color: white;
-    cursor: pointer;
-    font-weight: bold;
+.terminal-buttons{
+
+margin-top:15px;
+
 }
 
-button:hover {
-    opacity: 0.85;
+button{
+
+padding:10px 18px;
+margin-right:10px;
+
+border:none;
+border-radius:10px;
+
+background:#238636;
+color:white;
+
+cursor:pointer;
+
+font-weight:bold;
+
 }
 
-#stopBtn {
-    background: #da3633;
+button:hover{
+
+opacity:0.8;
+
 }
 
-iframe {
-    margin-top: 20px;
-    width: 100%;
-    height: 350px;
-    background: white;
-    border: none;
-    border-radius: 10px;
+#stopBtn{
+
+background:#da3633;
+
 }
+
+iframe{
+
+margin-top:20px;
+
+width:100%;
+height:450px;
+
+background:#0d1117;
+
+border:1px solid #30363d;
+
+border-radius:10px;
+
+}
+
 </style>
+
 </head>
 
 <body>
 
 <div class="terminal">
-    <h2>CodeNest Terminal</h2>
 
-    <textarea id="html"><h1>Calculator</h1>
+<h2>CodeNest Terminal</h2>
+
+<textarea id="html"><h1>Calculator Pro</h1>
 
 <input id="a" placeholder="First number">
 <input id="b" placeholder="Second number">
 
-<button onclick="showResult()">+</button>
+<br><br>
 
-<h2 id="result"></h2>
+<button onclick="sum()">+</button>
+<button onclick="minus()">-</button>
+<button onclick="multiply()">×</button>
+<button onclick="divide()">÷</button>
+<button onclick="power()">x²</button>
+<button onclick="clearResult()">Clear</button>
+
+<h2 id="result">0</h2>
 
 <style>
-body {
-    background: #0d1117;
-    color: #e6edf3;
-    font-family: Arial;
-    padding: 40px;
-    text-align: center;
+
+body{
+background:#0d1117;
+color:#e6edf3;
+font-family:Arial;
+padding:40px;
+text-align:center;
 }
 
-h1 {
-    color: #39d353;
-    margin-bottom: 30px;
+h1{
+color:#39d353;
 }
 
-input {
-    background: #161b22;
-    border: 1px solid #30363d;
-    padding: 12px;
-    margin: 8px;
-    border-radius: 10px;
-    color: white;
-    width: 180px;
+input{
+
+background:#161b22;
+
+border:1px solid #30363d;
+
+padding:12px;
+margin:8px;
+
+border-radius:10px;
+
+color:white;
+
+width:180px;
+
 }
 
-button {
-    background: #238636;
-    border: none;
-    padding: 12px 18px;
-    border-radius: 10px;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
+button{
+
+background:#238636;
+
+border:none;
+
+padding:12px 18px;
+
+border-radius:10px;
+
+margin:5px;
+
+color:white;
+
+cursor:pointer;
+
+font-weight:bold;
+
 }
 
-button:hover {
-    background: #2ea043;
+button:hover{
+
+background:#2ea043;
+
 }
 
-#result {
-    margin-top: 30px;
-    font-size: 28px;
-    color: #58a6ff;
+#result{
+
+margin-top:30px;
+
+font-size:32px;
+
+color:#58a6ff;
+
 }
+
 </style>
 
 &lt;script&gt;
-function showResult() {
-    let a = Number(document.getElementById("a").value);
-    let b = Number(document.getElementById("b").value);
 
-    document.getElementById("result").innerText = a + b;
+function sum(){
+
+let a=Number(document.getElementById("a").value);
+let b=Number(document.getElementById("b").value);
+
+document.getElementById("result").innerText=a+b;
+
 }
+
+function minus(){
+
+let a=Number(document.getElementById("a").value);
+let b=Number(document.getElementById("b").value);
+
+document.getElementById("result").innerText=a-b;
+
+}
+
+function multiply(){
+
+let a=Number(document.getElementById("a").value);
+let b=Number(document.getElementById("b").value);
+
+document.getElementById("result").innerText=a*b;
+
+}
+
+function divide(){
+
+let a=Number(document.getElementById("a").value);
+let b=Number(document.getElementById("b").value);
+
+if(b===0){
+
+document.getElementById("result").innerText="Error";
+
+return;
+
+}
+
+document.getElementById("result").innerText=a/b;
+
+}
+
+function power(){
+
+let a=Number(document.getElementById("a").value);
+
+document.getElementById("result").innerText=a*a;
+
+}
+
+function clearResult(){
+
+document.getElementById("a").value="";
+document.getElementById("b").value="";
+document.getElementById("result").innerText="0";
+
+}
+
 &lt;/script&gt;</textarea>
 
-    <div class="terminal-buttons">
-        <button id="runBtn" type="button">▶ Run</button>
-        <button id="stopBtn" type="button">■ Stop</button>
 
-        <a href="index.html">
-            <button type="button">Exit</button>
-        </a>
-    </div>
+<div class="terminal-buttons">
 
-    <iframe id="preview"></iframe>
+<button id="runBtn">
+▶ Run
+</button>
+
+<button id="stopBtn">
+■ Stop
+</button>
+
+<a href="index.html">
+<button>
+Exit
+</button>
+</a>
+
+</div>
+
+<iframe id="preview"></iframe>
+
 </div>
 
 <script>
-document.getElementById("runBtn").addEventListener("click", function () {
-    let code = document.getElementById("html").value;
 
-    code = code
-        .replaceAll("&lt;", "<")
-        .replaceAll("&gt;", ">");
+document.getElementById(
+"runBtn"
+)
+.addEventListener(
+"click",
+function(){
 
-    document.getElementById("preview").srcdoc = code;
-});
+let code=
+document.getElementById(
+"html"
+)
+.value;
 
-document.getElementById("stopBtn").addEventListener("click", function () {
-    document.getElementById("preview").srcdoc = "";
-});
+code=
+code.replaceAll(
+"&lt;",
+"<"
+);
+
+code=
+code.replaceAll(
+"&gt;",
+">"
+);
+
+document.getElementById(
+"preview"
+)
+.srcdoc=
+code;
+
+}
+);
+
+document.getElementById(
+"stopBtn"
+)
+.addEventListener(
+"click",
+function(){
+
+document.getElementById(
+"preview"
+)
+.srcdoc="";
+
+}
+);
+
 </script>
 
 </body>
