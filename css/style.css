@@ -3431,3 +3431,50 @@ cursor:pointer;
     border: 1px solid #30363d;
     border-radius: 10px;
 }
+
+.profile-menu{
+position:relative;
+display:flex;
+align-items:center;
+}
+
+.header-avatar{
+width:42px;
+height:42px;
+
+border-radius:50%;
+
+object-fit:cover;
+
+cursor:pointer;
+
+border:2px solid #30363d;
+}
+
+.dropdown-menu{
+
+display:none;
+
+position:absolute;
+
+top:50px;
+right:0;
+
+background:#161b22;
+
+padding:10px;
+
+border-radius:10px;
+
+border:1px solid #30363d;
+
+width:140px;
+
+z-index:1000;
+}
+
+.dropdown-menu button{
+
+width:100%;
+margin-top:5px;
+}

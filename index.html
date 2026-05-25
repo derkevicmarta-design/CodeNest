@@ -45,25 +45,33 @@ if (!localStorage.getItem("currentUser")) {
         <a href="myprojects.html"><button>My repos</button></a>
 
         <div class="profile-menu">
-            <img
-                id="headerAvatar"
-                class="header-avatar"
-                src="https://derkevicmarta-design.github.io/CodeNest/images/avatar.jpg"
-                onclick="toggleMenu()"
-            >
 
-            <div id="dropdownMenu" class="dropdown-menu">
-                <div class="dropdown-user">
-                    <h3 id="menuUsername">Guest</h3>
-                </div>
+    <img
+        id="headerAvatar"
+        class="header-avatar"
+        src="assets/images/avatar.jpg"
+        alt="Avatar"
+        onclick="toggleMenu()"
+    >
 
-                <button id="profileBtn" onclick="goProfile()">Profile</button>
-                <button id="loginBtn" onclick="openAuth('login')">Login</button>
-                <button id="registerBtn" onclick="openAuth('register')">Register</button>
-                <button id="logoutBtn" onclick="logout()">Logout</button>
-            </div>
+    <div id="dropdownMenu" class="dropdown-menu">
+
+        <div class="dropdown-user">
+            <h3 id="menuUsername">Marta</h3>
         </div>
+
+        <button onclick="goProfile()">
+            Profile
+        </button>
+
+        <button onclick="logout()">
+            Logout
+        </button>
+
     </div>
+
+</div>
+    
 
 </header>
 
