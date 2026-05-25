@@ -1,46 +1,139 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-    <meta charset="UTF-8">
-    <title>CodeNest Terminal</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<title>CodeNest Terminal</title>
+
+<style>
+
+body{
+background:#0d1117;
+color:white;
+font-family:Arial;
+margin:0;
+padding:20px;
+}
+
+.terminal{
+background:#161b22;
+padding:20px;
+border-radius:15px;
+}
+
+textarea{
+width:100%;
+height:250px;
+background:black;
+color:#39d353;
+padding:10px;
+font-family:Consolas;
+border:none;
+border-radius:10px;
+}
+
+button{
+padding:10px 15px;
+margin-top:15px;
+cursor:pointer;
+}
+
+iframe{
+margin-top:20px;
+width:100%;
+height:350px;
+background:white;
+border:none;
+border-radius:10px;
+}
+
+</style>
+
 </head>
+
 <body>
 
 <div class="terminal">
 
-    <div class="terminal-header">
-        <span>CodeNest Terminal</span>
-        <a href="index.html"><button>Exit</button></a>
-    </div>
+<h2>CodeNest Terminal</h2>
 
-    <div class="editor">
-        <textarea id="html" class="code">
+<textarea id="html">
+
 <h1>Calculator</h1>
 
-<input type="number" id="a" placeholder="First number">
-<input type="number" id="b" placeholder="Second number">
+<input id="a" placeholder="First number">
 
-<br><br>
+<input id="b" placeholder="Second number">
 
-<button onclick="alert(Number(document.getElementById('a').value) + Number(document.getElementById('b').value))">+</button>
-<button onclick="alert(Number(document.getElementById('a').value) - Number(document.getElementById('b').value))">-</button>
-<button onclick="alert(Number(document.getElementById('a').value) * Number(document.getElementById('b').value))">×</button>
-<button onclick="alert(Number(document.getElementById('a').value) / Number(document.getElementById('b').value))">÷</button>
-        </textarea>
-    </div>
+<button onclick="showResult()">+</button>
 
-    <button onclick="runCode()" class="run-btn">Run Code</button>
+<h2 id="result"></h2>
 
-    <iframe id="preview"></iframe>
+<script>
+
+function showResult(){
+
+let a=
+Number(
+document.getElementById("a").value
+);
+
+let b=
+Number(
+document.getElementById("b").value
+);
+
+document.getElementById(
+"result"
+).innerText=
+a+b;
+
+}
+
+</script>
+
+</textarea>
+
+<br>
+
+<button id="runBtn">
+Run Code
+</button>
+
+<a href="index.html">
+<button>
+Exit
+</button>
+</a>
+
+<iframe id="preview"></iframe>
 
 </div>
 
 <script>
-function runCode() {
-    let html = document.getElementById("html").value;
-    document.getElementById("preview").srcdoc = html;
+
+document
+.getElementById("runBtn")
+.addEventListener(
+"click",
+function(){
+
+let code=
+document
+.getElementById(
+"html"
+)
+.value;
+
+document
+.getElementById(
+"preview"
+)
+.srcdoc=
+code;
+
 }
+);
+
 </script>
 
 </body>
