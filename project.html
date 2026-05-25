@@ -42,108 +42,51 @@
 
 <script>
 
-let htmlArea = document.getElementById("html");
-let cssArea = document.getElementById("css");
-let jsArea = document.getElementById("js");
+function showCodeTab(tabName, button){
 
-const defaultHTML = `
-<h1>Calculator</h1>
+document.getElementById("html").style.display="none";
+document.getElementById("css").style.display="none";
+document.getElementById("js").style.display="none";
 
-<input id="a" placeholder="First number">
-<input id="b" placeholder="Second number">
-
-<button onclick="sum()">+</button>
-
-<h2 id="result"></h2>
-`;
-
-const defaultCSS = `
-body{
-font-family:Arial;
-text-align:center;
-padding:30px;
-}
-`;
-
-const defaultJS = `
-function sum(){
-
-let a=Number(document.getElementById("a").value);
-let b=Number(document.getElementById("b").value);
-
-document.getElementById("result").innerText=a+b;
-
-}
-`;
-
-htmlArea.value = defaultHTML;
-cssArea.value = defaultCSS;
-jsArea.value = defaultJS;
+document.getElementById(tabName).style.display="block";
 
 document.querySelectorAll(".file-tab")
 .forEach(btn=>{
 
-btn.addEventListener("click",()=>{
-
-document.querySelectorAll(".code")
-.forEach(x=>x.style.display="none");
-
-document.getElementById(
-btn.dataset.file
-).style.display="block";
+btn.classList.remove("active");
 
 });
 
-});
+button.classList.add("active");
+
+}
 
 document.getElementById("runBtn")
-.addEventListener("click",()=>{
+.addEventListener("click",function(){
 
-document.getElementById(
-"preview"
-).srcdoc =
+let html=
+document.getElementById("html").value;
 
-`
-<html>
-<head>
+let css=
+document.getElementById("css").value;
 
-<style>
+let js=
+document.getElementById("js").value;
 
-${cssArea.value}
+let iframe=
+document.getElementById("preview");
 
-</style>
+iframe.srcdoc=
+"<html><head><style>"
++css+
+"</style></head><body>"
++html+
+"<script>"
++js+
+"<\/script></body></html>";
 
-</head>
+});
 
-<body>
-
-${htmlArea.value}
-
-<script>
-
-${jsArea.value}
-
-<\/script>
-
-</body>
-
-</html>
-
-
-
-function showCodeTab(tabName, button) {
-    document.getElementById("html").style.display = "none";
-    document.getElementById("css").style.display = "none";
-    document.getElementById("js").style.display = "none";
-
-    document.getElementById(tabName).style.display = "block";
-
-    document.querySelectorAll(".file-tab").forEach(btn => {
-        btn.classList.remove("active");
-    });
-
-    button.classList.add("active");
-}
 </script>
 
 </body>
