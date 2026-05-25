@@ -3171,3 +3171,42 @@ margin-top:15px;
 margin-top:10px;
 background:#da3633;
 }
+
+/* ===== MISSION ALERTS ===== */
+
+.mission-alerts {
+    margin: 24px 0;
+}
+
+.mission-alerts h2 {
+    color: white;
+    margin-bottom: 14px;
+}
+
+.alert-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+}
+
+.alert-card {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 14px;
+    padding: 16px;
+}
+
+.alert-card b {
+    color: #58a6ff;
+}
+
+.alert-card p {
+    color: #8b949e;
+    margin-bottom: 0;
+}
+
+@media (max-width: 800px) {
+    .alert-list {
+        grid-template-columns: 1fr;
+    }
+}
