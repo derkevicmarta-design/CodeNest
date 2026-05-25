@@ -29,22 +29,86 @@
     </div>
 
     <div class="editor">
-        <textarea id="html" class="code" placeholder="HTML..."></textarea>
-        <textarea id="css" class="code" style="display:none" placeholder="CSS..."></textarea>
-        <textarea id="js" class="code" style="display:none" placeholder="JavaScript..."></textarea>
+        <textarea id="html" class="code"></textarea>
+        <textarea id="css" class="code" style="display:none"></textarea>
+        <textarea id="js" class="code" style="display:none"></textarea>
     </div>
 
-    <button class="run-btn" id="runBtn" type="button">
-    Run Code
-</button>
-
-<iframe id="preview"></iframe>
+    <button class="run-btn" onclick="runCode()">Run Code</button>
 
     <iframe id="preview"></iframe>
 
 </div>
 
-<script src="js/project.js"></script>
+<script>
+let index = localStorage.getItem("openProject");
+let projects = JSON.parse(localStorage.getItem("projects")) || [];
+let project = projects[index];
+
+function el(id) {
+    return document.getElementById(id);
+}
+
+if (!project) {
+    document.body.innerHTML = "<h1>Проєкт не знайдено</h1>";
+} else {
+    el("title").innerText = project.name;
+    el("desc").innerText = project.desc;
+
+    el("html").value = project.html || "";
+    el("css").value = project.css || "";
+    el("js").value = project.js || "";
+}
+
+function switchFile(file, btn) {
+    document.querySelectorAll(".code").forEach(area => {
+        area.style.display = "none";
+    });
+
+    el(file).style.display = "block";
+
+    document.querySelectorAll(".file-tab").forEach(tab => {
+        tab.classList.remove("active");
+    });
+
+    btn.classList.add("active");
+}
+
+function runCode() {
+    let html = el("html").value;
+    let css = el("css").value;
+    let js = el("js").value;
+
+    el("preview").srcdoc = `
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <style>${css}</style>
+        </head>
+        <body>
+            ${html}
+            <script>${js}<\/script>
+        </body>
+        </html>
+    `;
+}
+
+function saveProject() {
+    projects[index].html = el("html").value;
+    projects[index].css = el("css").value;
+    projects[index].js = el("js").value;
+
+    localStorage.setItem("projects", JSON.stringify(projects));
+
+    alert("Saved");
+}
+
+function goBack() {
+    window.location.href = "index.html";
+}
+
+runCode();
+</script>
 
 </body>
 </html>
