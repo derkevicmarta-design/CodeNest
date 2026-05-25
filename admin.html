@@ -32,6 +32,50 @@
 </section>
 
 <script>
+
+    let currentUser =
+localStorage.getItem("currentUser");
+
+if(
+currentUser !== "Marta"
+){
+
+document.body.innerHTML=`
+
+<div style="
+padding:50px;
+text-align:center;
+color:white;
+font-family:Arial;
+">
+
+<h1>
+Access denied
+</h1>
+
+<p>
+Only administrator can access this page
+</p>
+
+<a href="index.html">
+
+<button>
+
+Go back
+
+</button>
+
+</a>
+
+</div>
+
+`;
+
+throw new Error(
+"Access denied"
+);
+
+}
 function renderRequests() {
     let list = document.getElementById("requestsList");
     let requests = JSON.parse(localStorage.getItem("contactRequests")) || [];

@@ -359,3 +359,34 @@ event.target.classList.add(
 }
 
 switchFile("html");
+
+function updateStats(){
+
+let totalProjects = projects.length;
+
+let totalLikes = 0;
+
+projects.forEach(p => {
+totalLikes += p.likes || 0;
+});
+
+let users =
+JSON.parse(
+localStorage.getItem("users")
+) || [];
+
+let totalUsers = users.length || 1;
+
+if(document.getElementById("totalProjects")){
+document.getElementById("totalProjects").innerText = totalProjects;
+}
+
+if(document.getElementById("totalLikes")){
+document.getElementById("totalLikes").innerText = totalLikes;
+}
+
+if(document.getElementById("totalUsers")){
+document.getElementById("totalUsers").innerText = totalUsers;
+}
+
+}

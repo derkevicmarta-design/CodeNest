@@ -183,6 +183,26 @@ if(!localStorage.getItem("currentUser")){
     </button>
 </section>
 
+
+<section class="stats">
+
+<div class="stat-card">
+<h2 id="totalProjects">0</h2>
+<p>Total repositories</p>
+</div>
+
+<div class="stat-card">
+<h2 id="totalUsers">1</h2>
+<p>Users</p>
+</div>
+
+<div class="stat-card">
+<h2 id="totalLikes">0</h2>
+<p>Total likes</p>
+</div>
+
+</section>
+
 <section class="form">
 
             <h2>Додати репозиторій</h2>
@@ -295,6 +315,61 @@ if(!localStorage.getItem("currentUser")){
 
 <script src="auth.js"></script>
 <script src="js/script.js"></script>
+
+<section class="stats">
+
+<div class="stat-card">
+<h2 id="totalProjects">0</h2>
+<p>Total repositories</p>
+</div>
+
+<div class="stat-card">
+<h2 id="totalUsers">0</h2>
+<p>Users</p>
+</div>
+
+<div class="stat-card">
+<h2 id="totalLikes">0</h2>
+<p>Total likes</p>
+</div>
+
+</section>
+
+<script>
+
+let projects =
+JSON.parse(
+localStorage.getItem("projects")
+) || [];
+
+let users =
+JSON.parse(
+localStorage.getItem("users")
+) || [];
+
+let likes = 0;
+
+projects.forEach(p=>{
+
+likes += p.likes || 0;
+
+});
+
+document.getElementById(
+"totalProjects"
+).innerText = projects.length;
+
+document.getElementById(
+"totalUsers"
+).innerText =
+users.length || 1;
+
+document.getElementById(
+"totalLikes"
+).innerText =
+likes;
+
+</script>
 
 </body>
 </html>
