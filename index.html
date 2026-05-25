@@ -30,11 +30,13 @@ if(!localStorage.getItem("currentUser")){
         <!-- CENTER -->
         <div class="search-box">
 
-    <input
-        id="search"
-        type="text"
-        placeholder="Search repositories..."
-        <select id="sortProjects">
+<input
+id="search"
+type="text"
+placeholder="Search repositories..."
+>
+
+<select id="sortProjects">
 
 <option value="new">
 Newest
@@ -49,14 +51,13 @@ Name
 </option>
 
 </select>
-    >
 
-    <button
-        class="clear-search-btn"
-        onclick="clearSearch()"
-    >
-        Clear
-    </button>
+<button
+class="clear-search-btn"
+onclick="clearSearch()"
+>
+Clear
+</button>
 
 </div>
 
@@ -220,38 +221,37 @@ Name
 
 <section class="form">
 
-            <h2>Додати репозиторій</h2>
+<h2>Додати репозиторій</h2>
 
-            <input
-                type="text"
-                id="name"
-                placeholder="Назва проєкту"
-            >
+<input
+type="text"
+id="name"
+placeholder="Назва проєкту"
+>
 
-            <input
-                type="text"
-                id="desc"
-                placeholder="Опис проєкту"
+<input
+type="text"
+id="desc"
+placeholder="Опис проєкту"
+>
 
-                <textarea
-                id="code"
-                placeholder="Встав код проєкту..."
-                rows="8"
-            ></textarea>
-        
+<textarea
+id="code"
+placeholder="Встав код проєкту..."
+rows="8"
+></textarea>
 
-            <input
-                type="text"
-                id="category"
-                placeholder="Категорія"
-            >
+<input
+type="text"
+id="category"
+placeholder="Категорія"
+>
 
-            <button onclick="addProject()">
-                Додати
-            </button>
+<button onclick="addProject()">
+Додати
+</button>
 
-        </div>
-
+</section>
         <!-- PROJECTS -->
 
        
