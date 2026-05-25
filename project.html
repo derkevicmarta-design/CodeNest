@@ -11,82 +11,36 @@
 
     <div class="terminal-header">
         <span>CodeNest Terminal</span>
-        <div>
-            <button id="saveBtn">Save</button>
-            <a href="index.html"><button type="button">Exit</button></a>
-        </div>
+        <a href="index.html"><button>Exit</button></a>
     </div>
-
-    <div class="terminal-info">
-        <h2 id="title">Calculator</h2>
-        <p id="desc">Simple calculator</p>
-    </div>
-
-<div class="editor-tabs">
-    <button type="button" class="file-tab active" onclick="showCodeTab('html', this)">HTML</button>
-    <button type="button" class="file-tab" onclick="showCodeTab('css', this)">CSS</button>
-    <button type="button" class="file-tab" onclick="showCodeTab('js', this)">JS</button>
-</div>
 
     <div class="editor">
-        <textarea id="html" class="code"></textarea>
-        <textarea id="css" class="code" style="display:none"></textarea>
-        <textarea id="js" class="code" style="display:none"></textarea>
+        <textarea id="html" class="code">
+<h1>Calculator</h1>
+
+<input type="number" id="a" placeholder="First number">
+<input type="number" id="b" placeholder="Second number">
+
+<br><br>
+
+<button onclick="alert(Number(document.getElementById('a').value) + Number(document.getElementById('b').value))">+</button>
+<button onclick="alert(Number(document.getElementById('a').value) - Number(document.getElementById('b').value))">-</button>
+<button onclick="alert(Number(document.getElementById('a').value) * Number(document.getElementById('b').value))">×</button>
+<button onclick="alert(Number(document.getElementById('a').value) / Number(document.getElementById('b').value))">÷</button>
+        </textarea>
     </div>
 
-    <button class="run-btn" id="runBtn">Run Code</button>
+    <button onclick="runCode()" class="run-btn">Run Code</button>
 
     <iframe id="preview"></iframe>
 
 </div>
 
 <script>
-
-function showCodeTab(tabName, button){
-
-document.getElementById("html").style.display="none";
-document.getElementById("css").style.display="none";
-document.getElementById("js").style.display="none";
-
-document.getElementById(tabName).style.display="block";
-
-document.querySelectorAll(".file-tab")
-.forEach(btn=>{
-
-btn.classList.remove("active");
-
-});
-
-button.classList.add("active");
-
+function runCode() {
+    let html = document.getElementById("html").value;
+    document.getElementById("preview").srcdoc = html;
 }
-
-document.getElementById("runBtn")
-.addEventListener("click",function(){
-
-let html=
-document.getElementById("html").value;
-
-let css=
-document.getElementById("css").value;
-
-let js=
-document.getElementById("js").value;
-
-let iframe=
-document.getElementById("preview");
-
-iframe.srcdoc=
-"<html><head><style>"
-+css+
-"</style></head><body>"
-+html+
-"<script>"
-+js+
-"<\/script></body></html>";
-
-});
-
 </script>
 
 </body>
