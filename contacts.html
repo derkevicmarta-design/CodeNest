@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Contacts • CodeNest</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="header">
+    <div class="left">
+        <h2>CodeNest</h2>
+    </div>
+
+    <div class="right">
+        <a href="index.html"><button>All projects</button></a>
+        <a href="profile.html"><button>Profile</button></a>
+        <a href="admin.html"><button>Admin</button></a>
+        <button onclick="logout()">Logout</button>
+    </div>
+</header>
+
+<section class="contact-page">
+    <div class="contact-card">
+        <h1>Contact us</h1>
+        <p>Напишіть повідомлення адміністрації сайту CodeNest.</p>
+
+        <input id="contactName" type="text" placeholder="Ваше ім’я">
+        <input id="contactEmail" type="email" placeholder="Email">
+        <textarea id="contactMessage" placeholder="Ваше повідомлення"></textarea>
+
+        <button onclick="sendContactRequest()">Send request</button>
+
+        <div id="contactStatus"></div>
+    </div>
+</section>
+
+<script>
+function sendContactRequest() {
+    let name = document.getElementById("contactName").value.trim();
+    let email = document.getElementById("contactEmail").value.trim();
+    let message = document.getElementById("contactMessage").value.trim();
+    let status = document.getElementById("contactStatus");
+
+    if (!name || !email || !message) {
+        status.innerText = "Заповніть усі поля";
+        status.style.color = "#f85149";
+        return;
+    }
+
+    let requests = JSON.parse(localStorage.getItem("contactRequests")) || [];
+
+    requests.push({
+        id: Date.now(),
+        name: name,
+        email: email,
+        message: message,
+        date: new Date().toLocaleDateString(),
+        status: "new"
+    });
+
+    localStorage.setItem("contactRequests", JSON.stringify(requests));
+
+    document.getElementById("contactName").value = "";
+    document.getElementById("contactEmail").value = "";
+    document.getElementById("contactMessage").value = "";
+
+    status.innerText = "Запит успішно збережено";
+    status.style.color = "#39d353";
+}
+
+function logout() {
+    localStorage.removeItem("currentUser");
+    window.location.href = "login.html";
+}
+</script>
+
+</body>
+</html>
