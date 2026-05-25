@@ -85,26 +85,23 @@ document.querySelectorAll(".file-tab").forEach(button => {
 });
 
 document.getElementById("runBtn").addEventListener("click", function () {
-    let html = el("html").value;
-    let css = el("css").value;
-    let js = el("js").value;
+    let html = document.getElementById("html").value;
+    let css = document.getElementById("css").value;
+    let js = document.getElementById("js").value;
 
-    let fullCode = `
-        <!DOCTYPE html>
-        <html>
-        <head>
-            <style>${css}</style>
-        </head>
-        <body>
-            ${html}
-            <script>
-                ${js}
-            <\/script>
-        </body>
-        </html>
-    `;
+    let fullCode =
+        "<!DOCTYPE html>" +
+        "<html>" +
+        "<head>" +
+        "<style>" + css + "</style>" +
+        "</head>" +
+        "<body>" +
+        html +
+        "<script>" + js + "<\/script>" +
+        "</body>" +
+        "</html>";
 
-    el("preview").srcdoc = fullCode;
+    document.getElementById("preview").srcdoc = fullCode;
 });
 
 document.getElementById("saveBtn").addEventListener("click", function () {
