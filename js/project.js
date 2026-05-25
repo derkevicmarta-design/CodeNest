@@ -102,3 +102,9 @@ document.querySelector(".file-tab")
 );
 
 updatePreview();
+
+let runBtn = document.getElementById("runBtn");
+
+if (runBtn) {
+    runBtn.addEventListener("click", updatePreview);
+}
