@@ -125,7 +125,7 @@ function addProject() {
     let name = document.getElementById("name")?.value;
     let desc = document.getElementById("desc")?.value;
     let category = document.getElementById("category")?.value || "JavaScript";
-    let code = document.getElementById("code")?.value || "";
+    
 
     if (!name || !desc) {
         alert("Fill all fields");
@@ -139,7 +139,7 @@ function addProject() {
         author: currentUser,
         likes: 0,
         fav: false,
-        html: code,
+        html: "",
         css: "",
         js: ""
     });
@@ -150,7 +150,7 @@ function addProject() {
     document.getElementById("name").value = "";
     document.getElementById("desc").value = "";
     if (document.getElementById("category")) document.getElementById("category").value = "";
-    if (document.getElementById("code")) document.getElementById("code").value = "";
+    
 }
 
 function openModal(index) {
