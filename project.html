@@ -79,27 +79,103 @@ iframe {
 
 <h2 id="result"></h2>
 
-&lt;script&gt;
-function showResult() {
-    let a = Number(document.getElementById("a").value);
-    let b = Number(document.getElementById("b").value);
+<h1>Calculator</h1>
 
-    document.getElementById("result").innerText = a + b;
+<input id="a" placeholder="First number">
+
+<input id="b" placeholder="Second number">
+
+<button onclick="showResult()">+</button>
+
+<h2 id="result"></h2>
+
+<style>
+
+body{
+background:#0d1117;
+color:#e6edf3;
+font-family:Arial;
+padding:40px;
+text-align:center;
 }
+
+h1{
+color:#39d353;
+margin-bottom:30px;
+}
+
+input{
+
+background:#161b22;
+border:1px solid #30363d;
+
+padding:12px;
+margin:8px;
+
+border-radius:10px;
+
+color:white;
+
+width:180px;
+
+}
+
+button{
+
+background:#238636;
+border:none;
+
+padding:12px 18px;
+
+border-radius:10px;
+
+color:white;
+
+font-weight:bold;
+
+cursor:pointer;
+
+}
+
+button:hover{
+
+background:#2ea043;
+
+}
+
+#result{
+
+margin-top:30px;
+
+font-size:28px;
+color:#58a6ff;
+
+}
+
+</style>
+
+&lt;script&gt;
+
+function showResult(){
+
+let a=
+Number(
+document.getElementById("a").value
+);
+
+let b=
+Number(
+document.getElementById("b").value
+);
+
+document.getElementById(
+"result"
+).innerText=
+a+b;
+
+}
+
 &lt;/script&gt;
-    </textarea>
-
-    <div class="terminal-buttons">
-        <button id="runBtn">▶ Run</button>
-        <button id="stopBtn">■ Stop</button>
-
-        <a href="index.html">
-            <button type="button">Exit</button>
-        </a>
-    </div>
-
-    <iframe id="preview"></iframe>
-</div>
 
 <script>
 document.getElementById("runBtn").addEventListener("click", function () {
