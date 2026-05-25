@@ -11,19 +11,15 @@
 
     <div class="terminal-header">
         <span>CodeNest Terminal</span>
-
         <div>
-            <button id="saveBtn" type="button">Save</button>
-
-            <a href="index.html">
-                <button type="button">Exit</button>
-            </a>
+            <button id="saveBtn">Save</button>
+            <a href="index.html"><button type="button">Exit</button></a>
         </div>
     </div>
 
     <div class="terminal-info">
-        <h2 id="title"></h2>
-        <p id="desc"></p>
+        <h2 id="title">Calculator</h2>
+        <p id="desc">Simple calculator</p>
     </div>
 
     <div class="editor-tabs">
@@ -38,9 +34,7 @@
         <textarea id="js" class="code" style="display:none"></textarea>
     </div>
 
-    <button class="run-btn" id="runBtn" type="button">
-        Run Code
-    </button>
+    <button class="run-btn" id="runBtn">Run Code</button>
 
     <iframe id="preview"></iframe>
 
@@ -51,31 +45,16 @@ let index = localStorage.getItem("openProject");
 let projects = JSON.parse(localStorage.getItem("projects")) || [];
 let project = projects[index];
 
-function el(id) {
-    return document.getElementById(id);
-}
-
-if (!project) {
-    document.body.innerHTML = "<h1>Проєкт не знайдено</h1>";
-} else {
-    el("title").innerText = project.name;
-    el("desc").innerText = project.desc;
-
-    el("html").value = project.html || `
-<h1>Calculator</h1>
+const defaultHtml = `<h1>Calculator</h1>
 <input id="a" placeholder="First number">
 <input id="b" placeholder="Second number">
 <button onclick="sum()">+</button>
-<h2 id="result"></h2>
-`;
+<h2 id="result"></h2>`;
 
-el("css").value = project.css || `
-body {
+const defaultCss = `body {
     font-family: Arial;
     text-align: center;
     padding: 40px;
-    background: #0d1117;
-    color: white;
 }
 
 input {
@@ -85,28 +64,30 @@ input {
 
 button {
     padding: 10px 15px;
-}
-`;
+}`;
 
-el("js").value = project.js || `
-function sum() {
+const defaultJs = `function sum() {
     let a = Number(document.getElementById("a").value);
     let b = Number(document.getElementById("b").value);
-
     document.getElementById("result").innerText = a + b;
-}
-`;
+}`;
+
+document.getElementById("html").value = project?.html || defaultHtml;
+document.getElementById("css").value = project?.css || defaultCss;
+document.getElementById("js").value = project?.js || defaultJs;
+
+if (project) {
+    document.getElementById("title").innerText = project.name;
+    document.getElementById("desc").innerText = project.desc;
 }
 
-document.querySelectorAll(".file-tab").forEach(button => {
-    button.addEventListener("click", function () {
-        let file = this.dataset.file;
-
+document.querySelectorAll(".file-tab").forEach(btn => {
+    btn.addEventListener("click", function () {
         document.querySelectorAll(".code").forEach(area => {
             area.style.display = "none";
         });
 
-        el(file).style.display = "block";
+        document.getElementById(this.dataset.file).style.display = "block";
 
         document.querySelectorAll(".file-tab").forEach(tab => {
             tab.classList.remove("active");
@@ -121,27 +102,23 @@ document.getElementById("runBtn").addEventListener("click", function () {
     let css = document.getElementById("css").value;
     let js = document.getElementById("js").value;
 
-    let fullCode =
-        "<!DOCTYPE html>" +
-        "<html>" +
-        "<head>" +
-        "<style>" + css + "</style>" +
-        "</head>" +
-        "<body>" +
+    document.getElementById("preview").srcdoc =
+        "<!DOCTYPE html><html><head><style>" +
+        css +
+        "</style></head><body>" +
         html +
-        "<script>" + js + "<\/script>" +
-        "</body>" +
-        "</html>";
-
-    document.getElementById("preview").srcdoc = fullCode;
+        "<script>" +
+        js +
+        "<\/script></body></html>";
 });
 
 document.getElementById("saveBtn").addEventListener("click", function () {
-    projects[index].html = el("html").value;
-    projects[index].css = el("css").value;
-    projects[index].js = el("js").value;
-
-    localStorage.setItem("projects", JSON.stringify(projects));
+    if (project) {
+        projects[index].html = document.getElementById("html").value;
+        projects[index].css = document.getElementById("css").value;
+        projects[index].js = document.getElementById("js").value;
+        localStorage.setItem("projects", JSON.stringify(projects));
+    }
 
     alert("Saved");
 });
