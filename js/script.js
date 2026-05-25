@@ -1,3 +1,67 @@
+let defaultProjects = [
+    {
+        name: "Calculator",
+        desc: "Simple calculator",
+        author: "Marta",
+        category: "JavaScript",
+        likes: 12,
+        html: `
+<h1>Calculator</h1>
+<input id="a" placeholder="First number">
+<input id="b" placeholder="Second number">
+<button onclick="sum()">+</button>
+<div id="result"></div>
+`,
+        css: `
+body {
+    font-family: Arial;
+    padding: 30px;
+}
+`,
+        js: `
+function sum() {
+    let a = Number(document.getElementById("a").value);
+    let b = Number(document.getElementById("b").value);
+    document.getElementById("result").innerText = a + b;
+}
+`
+    },
+    {
+        name: "To-Do List",
+        desc: "Task manager",
+        author: "Marta",
+        category: "JavaScript",
+        likes: 8,
+        html: `
+<h1>To-Do List</h1>
+<input id="task" placeholder="New task">
+<button onclick="addTask()">Add</button>
+<ul id="list"></ul>
+`,
+        css: `
+body {
+    font-family: Arial;
+    padding: 30px;
+}
+li {
+    margin: 8px 0;
+}
+`,
+        js: `
+function addTask() {
+    let task = document.getElementById("task").value;
+    let li = document.createElement("li");
+    li.innerText = task;
+    document.getElementById("list").appendChild(li);
+}
+`
+    }
+];
+
+if (!localStorage.getItem("projects")) {
+    localStorage.setItem("projects", JSON.stringify(defaultProjects));
+}
+
 let projects =
 JSON.parse(
 localStorage.getItem("projects")
