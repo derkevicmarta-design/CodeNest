@@ -61,9 +61,41 @@ if (!project) {
     el("title").innerText = project.name;
     el("desc").innerText = project.desc;
 
-    el("html").value = project.html || "";
-    el("css").value = project.css || "";
-    el("js").value = project.js || "";
+    el("html").value = project.html || `
+<h1>Calculator</h1>
+<input id="a" placeholder="First number">
+<input id="b" placeholder="Second number">
+<button onclick="sum()">+</button>
+<h2 id="result"></h2>
+`;
+
+el("css").value = project.css || `
+body {
+    font-family: Arial;
+    text-align: center;
+    padding: 40px;
+    background: #0d1117;
+    color: white;
+}
+
+input {
+    padding: 10px;
+    margin: 5px;
+}
+
+button {
+    padding: 10px 15px;
+}
+`;
+
+el("js").value = project.js || `
+function sum() {
+    let a = Number(document.getElementById("a").value);
+    let b = Number(document.getElementById("b").value);
+
+    document.getElementById("result").innerText = a + b;
+}
+`;
 }
 
 document.querySelectorAll(".file-tab").forEach(button => {
