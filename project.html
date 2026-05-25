@@ -22,11 +22,11 @@
         <p id="desc">Simple calculator</p>
     </div>
 
-    <div class="editor-tabs">
-        <button class="file-tab active" data-file="html">HTML</button>
-        <button class="file-tab" data-file="css">CSS</button>
-        <button class="file-tab" data-file="js">JS</button>
-    </div>
+<div class="editor-tabs">
+    <button type="button" class="file-tab active" onclick="showCodeTab('html', this)">HTML</button>
+    <button type="button" class="file-tab" onclick="showCodeTab('css', this)">CSS</button>
+    <button type="button" class="file-tab" onclick="showCodeTab('js', this)">JS</button>
+</div>
 
     <div class="editor">
         <textarea id="html" class="code"></textarea>
@@ -128,10 +128,22 @@ ${jsArea.value}
 </body>
 
 </html>
-`;
 
-});
 
+
+function showCodeTab(tabName, button) {
+    document.getElementById("html").style.display = "none";
+    document.getElementById("css").style.display = "none";
+    document.getElementById("js").style.display = "none";
+
+    document.getElementById(tabName).style.display = "block";
+
+    document.querySelectorAll(".file-tab").forEach(btn => {
+        btn.classList.remove("active");
+    });
+
+    button.classList.add("active");
+}
 </script>
 
 </body>
