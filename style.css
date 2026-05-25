@@ -3155,8 +3155,40 @@ height:150px;
 resize:none;
 }
 
-.contact-card button{
+button{
+
+padding:10px 18px;
+margin-right:10px;
+
+border:none;
+border-radius:10px;
+
+background:#238636;
+color:white;
+
+cursor:pointer;
+
+font-weight:bold;
+
+}
+
+button:hover{
+
+opacity:0.8;
+
+}
+
+#stopBtn{
+
+background:#da3633;
+
+}
+
+.terminal-buttons{
+
 margin-top:15px;
+margin-bottom:15px;
+
 }
 
 .request-card{
