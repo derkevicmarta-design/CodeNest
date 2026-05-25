@@ -843,7 +843,9 @@
             <button>My repos</button>
         </a>
 
-        <button onclick="logout()">Logout</button>
+        <button onclick="localStorage.removeItem('currentUser'); window.location.href='login.html';">
+    Logout
+</button>
 
         <span class="header-user-name">Marta</span>
     </div>
