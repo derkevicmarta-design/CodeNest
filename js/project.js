@@ -12,6 +12,7 @@ function el(id) {
 }
 
 if (project) {
+
     el("title").innerText = project.name;
     el("desc").innerText = project.desc;
 
@@ -21,13 +22,16 @@ if (project) {
 }
 
 function switchFile(file, btn) {
-    document.querySelectorAll(".code").forEach(area => {
+
+    document.querySelectorAll(".code")
+    .forEach(area => {
         area.style.display = "none";
     });
 
     el(file).style.display = "block";
 
-    document.querySelectorAll(".file-tab").forEach(tab => {
+    document.querySelectorAll(".file-tab")
+    .forEach(tab => {
         tab.classList.remove("active");
     });
 
@@ -35,35 +39,87 @@ function switchFile(file, btn) {
 }
 
 function updatePreview() {
+
     let html = el("html").value;
     let css = el("css").value;
     let js = el("js").value;
 
     el("preview").srcdoc = `
-        <html>
-        <head>
-            <style>${css}</style>
-        </head>
-        <body>
-            ${html}
-            <script>${js}<\/script>
-        </body>
-        </html>
-    `;
+
+<html>
+
+<head>
+
+<style>
+
+${css}
+
+</style>
+
+</head>
+
+<body>
+
+${html}
+
+<script>
+
+${js}
+
+<\/script>
+
+</body>
+
+</html>
+
+`;
 }
 
 function saveProject() {
-    projects[index].html = el("html").value;
-    projects[index].css = el("css").value;
-    projects[index].js = el("js").value;
 
-    localStorage.setItem("projects", JSON.stringify(projects));
+    projects[index].html =
+    el("html").value;
 
-    alert("Збережено!");
+    projects[index].css =
+    el("css").value;
+
+    projects[index].js =
+    el("js").value;
+
+    localStorage.setItem(
+        "projects",
+        JSON.stringify(projects)
+    );
+
+    alert("Saved");
 }
 
-function goBack() {
-    window.location.href = "index.html";
+function autoSave(){
+
+saveProject();
+
+}
+
+el("html").addEventListener(
+"input",
+autoSave
+);
+
+el("css").addEventListener(
+"input",
+autoSave
+);
+
+el("js").addEventListener(
+"input",
+autoSave
+);
+
+function goBack(){
+
+window.location.href=
+"index.html";
+
 }
 
 updatePreview();
