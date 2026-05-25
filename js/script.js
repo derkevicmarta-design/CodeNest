@@ -4,6 +4,84 @@ let currentUser = localStorage.getItem("currentUser") || "Marta";
 localStorage.setItem("currentUser", currentUser);
 
 let defaultProjects = [
+{
+name:"Weather App",
+
+desc:"Weather application UI",
+
+author:"Marta",
+
+category:"JavaScript",
+
+likes:9,
+
+fav:false,
+
+html:`
+<h1>Weather App</h1>
+
+<input id="city"
+placeholder="Enter city">
+
+<button onclick="showWeather()">
+Search
+</button>
+
+<div id="weather"></div>
+`,
+
+css:`
+body{
+background:#0d1117;
+color:white;
+font-family:Arial;
+text-align:center;
+padding:40px;
+}
+
+input{
+padding:12px;
+border-radius:10px;
+border:1px solid #30363d;
+background:#161b22;
+color:white;
+}
+
+button{
+padding:12px 18px;
+background:#238636;
+color:white;
+border:none;
+border-radius:10px;
+margin-left:10px;
+}
+
+#weather{
+margin-top:30px;
+font-size:24px;
+color:#58a6ff;
+}
+`,
+
+js:`
+function showWeather(){
+
+let city=
+document.getElementById(
+"city"
+).value;
+
+document.getElementById(
+"weather"
+).innerText=
+
+"City: " + city +
+" | Temperature: 22°C";
+
+}
+`
+}
+
     {
     name: "Calculator Pro",
     desc: "Calculator with operations",
